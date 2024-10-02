@@ -1,10 +1,16 @@
-import { useNavigation } from "@react-navigation/native";
+import { useFocusEffect,useNavigation } from "@react-navigation/native";
+
 import React from "react";
-import { KeyboardAvoidingView, StyleSheet, Text, TouchableOpacity } from "react-native";
+import { KeyboardAvoidingView, StatusBar, StyleSheet, Text, TouchableOpacity } from "react-native";
 import * as Animatable from 'react-native-animatable';
 
 const Inicial = () => {
     const navigator = useNavigation();
+    useFocusEffect(
+        React.useCallback(() => {
+          StatusBar.setBackgroundColor('#FFD8BE');
+        }, [])
+      );
 
     return (
         <KeyboardAvoidingView style={styles.principal} behavior="padding">
@@ -27,7 +33,7 @@ const Inicial = () => {
 }
 const styles = StyleSheet.create({
     principal: {
-        backgroundColor: "#68327e",
+        backgroundColor: "#FFD8BE",
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
@@ -56,18 +62,18 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         marginVertical: 10,
-        borderColor: '#E0E0E0',
+        borderColor: '#000000',
         borderWidth: 2,
 
     },
     buttonText: {
-        color: '#E0E0E0',
+        color: '#000000',
         fontWeight: 'bold',
         fontSize: 18,
         
     },
     newUser: {
-        color: '#E0E0E0',
+        color: '#000000',
         fontWeight: 'bold',
         fontSize: 16
     },

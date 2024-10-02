@@ -17,3 +17,5 @@ useEffect(() => {
 
 
 para pegar o valor do sentimento
+
+68327e cor roxa

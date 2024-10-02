@@ -1,12 +1,19 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Image, TextInput, KeyboardAvoidingView, ScrollView,TouchableOpacity } from 'react-native';
+import { StatusBar,View, Text, StyleSheet, Image, TextInput, KeyboardAvoidingView, ScrollView,TouchableOpacity } from 'react-native';
 import CheckBox from '@react-native-community/checkbox';
-import { useNavigation } from '@react-navigation/native';
+import { useFocusEffect,useNavigation } from '@react-navigation/native';
 
 export default function SignUp() {
   const [toggleCheck1, setToggleCheck1] = useState(false);
   const [toggleCheck2, setToggleCheck2] = useState(false)
   const navigation = useNavigation()
+
+  useFocusEffect(
+    React.useCallback(() => {
+      StatusBar.setBackgroundColor('#FFD8BE');
+    }, [])
+  );
+
 
   return (
     <KeyboardAvoidingView style={styles.container}>
@@ -20,33 +27,33 @@ export default function SignUp() {
           <TextInput
             placeholder='Digite seu nome'
             style={styles.input}
-            placeholderTextColor={'#68327e'}
+            placeholderTextColor={'#000000'}
           />
           <Text style={styles.textoI}>EMAIL</Text>
           <TextInput
             placeholder='Digite seu e-mail'
             style={styles.input}
-            placeholderTextColor={'#68327e'}
+            placeholderTextColor={'#000000'}
           />
           <Text style={styles.textoI}>REPITA O E-MAIL</Text>
           <TextInput
             placeholder='Repita seu e-mail'
             style={styles.input}
-            placeholderTextColor={'#68327e'}
+            placeholderTextColor={'#000000'}
           />
           <Text style={styles.textoI}>SENHA (MIN 4 CARACTÉRES)</Text>
           <TextInput
             placeholder='Crie uma senha'
             style={styles.input}
             secureTextEntry={true}
-            placeholderTextColor={'#68327e'}
+            placeholderTextColor={'#000000'}
           />
           <Text style={styles.textoI}>REPITA A SENHA</Text>
           <TextInput
             placeholder='Repita a senha'
             style={styles.input}
             secureTextEntry={true}
-            placeholderTextColor={'#68327e'}
+            placeholderTextColor={'#000000'}
           />
           <View style={styles.checkContainer}>
             <CheckBox
@@ -54,7 +61,7 @@ export default function SignUp() {
               value={toggleCheck1}
               onValueChange={(newValue) => setToggleCheck1(newValue)}
               style={styles.check}
-              tintColors={{ true: '#5D1576', false: '#68327e' }}
+              tintColors={{ true: '#FFD8BE', false: '#000000' }}
             />
             <Text style={styles.title}>Aceito os termos e condições</Text>
           </View>
@@ -64,11 +71,11 @@ export default function SignUp() {
               value={toggleCheck2}
               onValueChange={(newValue) => setToggleCheck2(newValue)}
               style={styles.check}
-              tintColors={{ true: '#4B0082', false: '#68327e' }}
+              tintColors={{ true: '#FFD8BE', false: '#000000' }}
             />
             <Text style={styles.title}>Autorizo o envio de notificações</Text>
           </View>
-          <TouchableOpacity style={styles.button} onPress={()=> navigation.navigate('Tab')}>
+          <TouchableOpacity style={styles.button} onPress={()=> navigation.navigate('TabNavigation')}>
                     <Text style={styles.buttonText}>REGISTRAR</Text> 
                 </TouchableOpacity>
         </View>
@@ -80,7 +87,7 @@ export default function SignUp() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F7E4FF',
+    backgroundColor: '#FFD8BE',
   },
   scrollViewContent: {
     flexGrow: 1,
@@ -111,11 +118,11 @@ const styles = StyleSheet.create({
     paddingLeft:10,
     marginTop: 10,
     marginBottom: 3,
-    color:'#68327e',
+    color:'#000000',
     fontWeight:'bold'
   },
   input: {
-    borderColor: '#68327e',
+    borderColor: '#000000',
     borderBottomWidth: 1,
     borderRadius: 10,
     width: 400,
@@ -138,12 +145,12 @@ const styles = StyleSheet.create({
   title: {
     marginLeft: 10,
     fontSize: 16,
-    color:'#68327e',
+    color:'#000000',
     fontWeight:'bold'
   },
   button:{
     marginTop:25,
-    borderColor:'#68327e',
+    borderColor:'#000000',
     borderWidth:1.5,
     borderRadius:15,
     width:250,
@@ -157,6 +164,6 @@ const styles = StyleSheet.create({
     paddingTop:10,
     padding:5,
     fontWeight:'bold',
-    color:'#68327e'
+    color:'#000000'
   }
 });

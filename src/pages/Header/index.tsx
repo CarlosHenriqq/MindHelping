@@ -27,7 +27,7 @@ export default  Header;
 const styles = StyleSheet.create({
 
     header:{
-        backgroundColor:'#68327e',
+        backgroundColor:'#9381FF',
         width:'100%',
         height:'7%',
         flexDirection:'row',
@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
         width:'85%',
         fontWeight:'bold',
         textAlign:'center',
-        color:'#e6e6e6'
+        color:'#000000'
         
     },
     img:{

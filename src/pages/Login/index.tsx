@@ -11,9 +11,11 @@ const Login = () => {
     };
     useFocusEffect(
         React.useCallback(() => {
-          StatusBar.setBackgroundColor('#F7E4FF');
+          StatusBar.setBackgroundColor('#FFD8BE');
         }, [])
       );
+    
+    
 
     return (
         <KeyboardAvoidingView style={styles.principal} behavior="padding">
@@ -29,14 +31,14 @@ const Login = () => {
                 <TextInput
                     placeholder='Digite seu email'
                     style={styles.input}
-                    placeholderTextColor="#68327e"
+                    placeholderTextColor="#000000"
                 />
                 <Text style={styles.texto}>Senha:</Text>
                 <TextInput 
                     placeholder='Digite sua senha'
                     style={styles.input}
                     secureTextEntry={true} 
-                    placeholderTextColor="#68327e"
+                    placeholderTextColor='#000000'
                 />
                 <Animatable.View style={styles.textButtonContainer}>
                     <TouchableOpacity onPress={handleNavigateToHome} style={styles.button}>
@@ -53,7 +55,7 @@ const Login = () => {
 
 const styles = StyleSheet.create({
     principal: {
-        backgroundColor: "#F7E4FF",
+        backgroundColor: "#FFD8BE",
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
@@ -75,22 +77,22 @@ const styles = StyleSheet.create({
         borderTopRightRadius: 70,
         borderBottomLeftRadius: 28,
         borderBottomRightRadius: 28,
-        flex: 2
+        flex: 2,
         
     },
     input: {
        
         borderRadius: 10,
-        borderColor: '#68327e',
+        borderColor: '#000000',
         width: '80%',
         paddingHorizontal: 10,
         borderWidth: 1,
-       
-        
+       backgroundColor:'#f1f1f1',
+        fontWeight:'bold'
     },
     texto: {
         fontSize: 20,
-        color: '#68327e',
+        color: '#000000',
         
         alignSelf: 'flex-start',
         marginBottom: 10,
@@ -98,7 +100,7 @@ const styles = StyleSheet.create({
         paddingLeft: 45
     },
     textSenha: {
-        color: '#68327e',
+        color: '#000000',
         fontStyle: 'italic'
     },
     senha: {
@@ -118,18 +120,18 @@ const styles = StyleSheet.create({
     },
     button: {
         borderRadius: 20,
-        backgroundColor:'#68327e',
+        backgroundColor:'#ffffff',
         height: 40,
         width: 330,
         alignItems: 'center',
         justifyContent: 'center',
         marginVertical: 10,
-        borderColor: '#68327e',
+        borderColor: '#000000',
         borderWidth: 1,
     },
     buttonText: {
-        color: '#f5f5f5',
-     
+        color: '#000000',
+        fontWeight:'bold',
         fontSize: 18
     },
 });

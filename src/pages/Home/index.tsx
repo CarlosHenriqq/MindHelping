@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { Text, View, StyleSheet, StatusBar, Image, TouchableOpacity } from 'react-native';
 import Header from '../Header';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
@@ -19,10 +19,24 @@ const Home = () => {
   const navigation = useNavigation();
 
   useFocusEffect(
-    useCallback(() => {
-      StatusBar.setBackgroundColor('#68327e');
+    React.useCallback(() => {
+      const loadFeeling = async () => {
+        const storedFeeling = await AsyncStorage.getItem('@selectedFeeling');
+        setSelectedFeeling(storedFeeling || null);
+      };
+  
+      loadFeeling();
+  
+      StatusBar.setBackgroundColor('#9381FF');
     }, [])
   );
+  useFocusEffect(
+    React.useCallback(() => {
+      StatusBar.setBackgroundColor('#9381FF');
+    }, [])
+  );
+
+  
 
   const handlePress = (feeling) => {
     setSelectedFeeling(feeling);
@@ -34,7 +48,7 @@ const Home = () => {
       try {
         await AsyncStorage.setItem('@selectedFeeling', selectedFeeling);
         console.log(`Sentimento selecionado: ${selectedFeeling}`);
-        navigation.navigate('Tab');
+        navigation.navigate('TabNavigation');
       } catch (e) {
         console.log("Erro ao salvar o sentimento: ", e);
       }
@@ -54,7 +68,7 @@ const Home = () => {
         autoplay={true}
         autoplayTimeout={5}
         style={styles.wrapper}
-        showsPagination={false}
+       
       >
         {feelings.map((item, index) => (
           <View key={index} style={styles.slide}>
@@ -118,11 +132,11 @@ const styles = StyleSheet.create({
   selectedFeelingValue: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: '#68327e',
+    color: '#9381FF',
     fontFamily: 'BarlowCondensed-Medium', // Use a fonte personalizada aqui
   },
   button: {
-    backgroundColor: '#68327e',
+    backgroundColor: '#9381FF',
     margin: 50,
     paddingVertical: 15,
     alignItems: 'center',

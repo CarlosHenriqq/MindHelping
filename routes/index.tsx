@@ -1,4 +1,5 @@
 import React from 'react';
+import {Image} from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -7,6 +8,8 @@ import Perfil from '../src/pages/Perfil';
 import Inicial from '../src/pages/Inicial';
 import Login from '../src/pages/Login';
 import SignUp from '../src/pages/SignUp';
+import Call from '../src/pages/Call';
+import Diario from '../src/pages/Diario';
 import LinearGradient from 'react-native-linear-gradient';
 
 
@@ -14,31 +17,44 @@ const Tabs = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
 const TabNavigation = () => (
-  <Tabs.Navigator
+<Tabs.Navigator
     screenOptions={({ route }) => ({
-      tabBarIcon: ({ focused, color, size }) => {
-        let iconName;
-        if (route.name === 'Perfil') {
-          iconName = focused ? 'ios-settings' : 'ios-list-settings';
-        } 
+      tabBarIcon: ({ color, size }) => {
+        let iconSource;
+        
+        // Define o ícone correspondente a cada aba
+        switch (route.name) {
+          case 'Perfil':
+            iconSource = require('../assets/img/perfil_nav.png');
+            break;
+          case 'Home':
+            iconSource = require('../assets/img/home_nav.png');
+            break;
+            case 'Call':
+            iconSource = require('../assets/img/telefone_nav.png');
+            break;    
+            case 'Diario':
+            iconSource = require('../assets/img/diario_nav.png');
+            break;       
+        }
 
-        return <Ionicons name={iconName} size={size} color={color} />;
+        return (
+          <Image
+            source={iconSource} // Fonte do ícone correspondente à aba
+            style={{ width: size, height: size, tintColor: color }}
+            resizeMode="contain"
+          />
+        );
       },
       tabBarActiveTintColor: 'black',
       tabBarInactiveTintColor: 'gray',
-      tabBarBackground: () => (
-        <LinearGradient
-        colors={['#68327e', '#9b59b6']} // Substitua pelas cores do gradiente desejado
-          style={{ flex: 1 }}
-        />
-      ),
       headerShown: false,
-     
     })}
   >
-      
-    <Tabs.Screen name="Perfil" component={Perfil} />
- 
+     <Tabs.Screen name="Perfil" component={Perfil} />
+    <Tabs.Screen name="Home" component={Home} />
+    <Tabs.Screen name="Call" component={Call} />
+    <Tabs.Screen name="Diario" component={Diario} />
   </Tabs.Navigator>
 );
 
@@ -49,7 +65,7 @@ export default function Routes() {
       <Stack.Screen name="Login" component={Login}/>
       <Stack.Screen name="SignUp" component={SignUp} />
       <Stack.Screen name="Home" component={Home} />
-      <Stack.Screen name="Tab" component={TabNavigation} />
+      <Stack.Screen name="TabNavigation" component={TabNavigation} />
 
     
    
