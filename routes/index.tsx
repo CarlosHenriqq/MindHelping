@@ -10,7 +10,8 @@ import Login from '../src/pages/Login';
 import SignUp from '../src/pages/SignUp';
 import Call from '../src/pages/Call';
 import Diario from '../src/pages/Diario';
-import LinearGradient from 'react-native-linear-gradient';
+import Chat from '../src/pages/Chat';
+import Psico from '../src/pages/Psicológo';
 
 
 const Tabs = createBottomTabNavigator();
@@ -27,15 +28,19 @@ const TabNavigation = () => (
           case 'Perfil':
             iconSource = require('../assets/img/perfil_nav.png');
             break;
-          case 'Home':
-            iconSource = require('../assets/img/home_nav.png');
-            break;
             case 'Call':
             iconSource = require('../assets/img/telefone_nav.png');
             break;    
+            case 'Home':
+            iconSource = require('../assets/img/home_nav.png');
+            break;
             case 'Diario':
             iconSource = require('../assets/img/diario_nav.png');
             break;       
+            case 'Chat':
+            iconSource = require('../assets/img/chat_nav.png');
+            case 'Psico':
+              iconSource = require('../assets/img/psico_nav.png');
         }
 
         return (
@@ -52,9 +57,11 @@ const TabNavigation = () => (
     })}
   >
      <Tabs.Screen name="Perfil" component={Perfil} />
-    <Tabs.Screen name="Home" component={Home} />
     <Tabs.Screen name="Call" component={Call} />
+    <Tabs.Screen name="Home" component={Home} />
     <Tabs.Screen name="Diario" component={Diario} />
+    <Tabs.Screen name="Chat" component={Chat} />
+    <Tabs.Screen name="Profissionais" component={Psico} />
   </Tabs.Navigator>
 );
 

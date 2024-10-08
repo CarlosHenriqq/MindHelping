@@ -8,15 +8,19 @@ const Diario = () => {
     // Limite de caracteres
     const CHAR_LIMIT = 45;
 
-    // Estado para armazenar o conteúdo dos campos
-    const [inputs, setInputs] = useState(Array(13).fill(''));
-    // Estado para armazenar o conteúdo anterior antes de limpar
-    const [previousInputs, setPreviousInputs] = useState([]);
+    // Estado para armazenar as páginas e o índice da página atual
+    const [pages, setPages] = useState([Array(13).fill('')]); // Inicializa com a primeira página vazia
+    const [currentPageIndex, setCurrentPageIndex] = useState(0);
 
     const handleChangeText = (text, index) => {
-        const updatedInputs = [...inputs];
+        const updatedInputs = [...pages[currentPageIndex]];
         updatedInputs[index] = text;
-        setInputs(updatedInputs);
+
+        // Atualiza a página atual
+        const updatedPages = [...pages];
+        updatedPages[currentPageIndex] = updatedInputs;
+
+        setPages(updatedPages);
 
         if (text.length >= CHAR_LIMIT) {
             // Mover o foco para o próximo input se houver
@@ -28,11 +32,23 @@ const Diario = () => {
     };
 
     const handleNextPage = () => {
-        // Salvar o conteúdo atual antes de limpar
-        setPreviousInputs(inputs);
+        // Salvar a página atual antes de avançar
+        const updatedPages = [...pages];
 
-        // Limpar os campos de entrada
-        setInputs(Array(13).fill(''));
+        // Verifica se já está na última página
+        if (currentPageIndex === updatedPages.length - 1) {
+            // Adiciona uma nova página vazia ao array de páginas
+            updatedPages.push(Array(13).fill(''));
+        }
+
+        setPages(updatedPages);
+        setCurrentPageIndex(currentPageIndex + 1); // Mover para a próxima página
+    };
+
+    const handlePreviousPage = () => {
+        if (currentPageIndex > 0) {
+            setCurrentPageIndex(currentPageIndex - 1); // Voltar uma página
+        }
     };
 
     return (
@@ -44,6 +60,7 @@ const Diario = () => {
                 <Text style={styles.title}>
                     MEU DIÁRIO
                 </Text>
+                <Text style={styles.currentPageText}>Página Atual: {currentPageIndex + 1}</Text>
                 <View style={styles.containerDiario}>
                     {inputRefs.map((ref, index) => (
                         <TextInput
@@ -52,22 +69,22 @@ const Diario = () => {
                             style={styles.diario}
                             maxLength={CHAR_LIMIT} // Limite de caracteres por campo
                             onChangeText={(text) => handleChangeText(text, index)}
-                            value={inputs[index]} // Valor controlado
+                            value={pages[currentPageIndex][index]} // Valor controlado para a página atual
                         />
                     ))}
                 </View>
-                <TouchableOpacity style={styles.botao} onPress={handleNextPage}>
-                    <Text style={styles.textBotao}>PRÓXIMA PÁGINA</Text>
-                </TouchableOpacity>
-                {/* Exemplo de exibição do conteúdo salvo */}
-                {previousInputs.length > 0 && (
-                    <View style={styles.previousContent}>
-                        <Text style={styles.previousTitle}>Conteúdo Anterior:</Text>
-                        {previousInputs.map((text, index) => (
-                            <Text key={index}>{text}</Text>
-                        ))}
-                    </View>
-                )}
+                
+                <View style={styles.buttonContainer}>
+                    
+                    <TouchableOpacity style={styles.botao} onPress={handlePreviousPage}>
+                        <Text style={styles.textBotao}>PÁGINA ANTERIOR</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.botao} onPress={handleNextPage}>
+                        <Text style={styles.textBotao}>PRÓXIMA PÁGINA</Text>
+                    </TouchableOpacity>
+                </View>
+                
+                
             </ScrollView>
         </KeyboardAvoidingView>
     );
@@ -82,41 +99,45 @@ const styles = StyleSheet.create({
     scrollView: {
         flexGrow: 1,
         justifyContent: 'center',
-        padding: 16, // Ajuste conforme necessário
+        padding: 16,
     },
     title: {
         fontWeight: 'bold',
         fontSize: 24,
         textAlign: 'center',
-        marginBottom: 10
+        
     },
     containerDiario: {
-        flexDirection: 'column', // Alinha os inputs verticalmente
-        alignItems: 'stretch', // Faz com que os inputs ocupem toda a largura disponível
+        flexDirection: 'column',
+        alignItems: 'stretch',
         borderWidth: 2,
-        borderRadius: 9
+        borderRadius: 9,
     },
     diario: {
-        borderWidth: 2,
-        height: 40, // Ajuste a altura conforme necessário
-        borderRadius: 2,
-        paddingHorizontal: 10, // Adiciona espaço interno horizontal
+        borderBottomWidth: 2,
+        height: 40,
+        borderRadius: 1,
+        paddingHorizontal: 10,
+        marginVertical: 5,
+    },
+    buttonContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        marginTop: 10,
     },
     botao: {
         alignItems: 'center',
         justifyContent: 'center',
-        margin: 10,
-        width: 'auto',
-        height: 'auto'
+        padding: 10,
+        borderWidth: 1,
+        borderRadius: 5,
     },
     textBotao: {
-        fontWeight: 'bold'
-    },
-    previousContent: {
-        marginTop: 20,
-    },
-    previousTitle: {
         fontWeight: 'bold',
-        marginBottom: 10,
-    }
+    },
+    currentPageText: {
+        textAlign: 'center',
+        marginBottom: 5,
+        fontWeight: 'bold',
+    },
 });
