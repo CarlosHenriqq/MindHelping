@@ -39,8 +39,10 @@ const TabNavigation = () => (
             break;       
             case 'Chat':
             iconSource = require('../assets/img/chat_nav.png');
-            case 'Psico':
-              iconSource = require('../assets/img/psico_nav.png');
+            break;
+            case 'Profissionais':
+            iconSource = require('../assets/img/psico_nav.png');
+            break;
         }
 
         return (
@@ -56,7 +58,7 @@ const TabNavigation = () => (
       headerShown: false,
     })}
   >
-     <Tabs.Screen name="Perfil" component={Perfil} />
+    <Tabs.Screen name="Perfil" component={Perfil} />
     <Tabs.Screen name="Call" component={Call} />
     <Tabs.Screen name="Home" component={Home} />
     <Tabs.Screen name="Diario" component={Diario} />

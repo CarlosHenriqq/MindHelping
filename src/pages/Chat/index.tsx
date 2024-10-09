@@ -30,6 +30,9 @@ const Chat = () => {
                     placeholder='Digite sua mensagem'
                     style={styles.inputChat}
                 />
+                <Image
+                 source={require('../../../assets/img/chat_icon/send.png')}
+                 style={styles.imagemEnviar}/>
             </View>
         </KeyboardAvoidingView>
     );
@@ -75,14 +78,22 @@ const styles = StyleSheet.create({
         backgroundColor: '#f0f0f0', // Cor de fundo para a área de chat (opcional)
     },
     inputContainer: {
-        padding: 10, // Adiciona um espaçamento em torno do input
+       padding:10,
         backgroundColor: '#ffffff', // Cor de fundo do input
+        flexDirection:'row',
+        justifyContent:'space-between',
+        alignItems:'center'
     },
     inputChat: {
         borderRadius: 8,
         borderWidth: 2,
+        width:'90%',
         height: 40,
         borderColor: '#ccc', // Cor da borda
         paddingHorizontal: 10, // Espaçamento interno horizontal
     },
+    imagemEnviar:{
+width:30,
+height:30
+    }
 });
