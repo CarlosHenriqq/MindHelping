@@ -15,26 +15,8 @@ const Home = () => {
     { text: "CHATO", image: require('../../../assets/img/logo.png') },
   ]);
 
-  const [selectedFeeling, setSelectedFeeling] = useState(null);
+  const [selectedFeeling, setSelectedFeeling] = useState();
   const navigation = useNavigation();
-
-  useFocusEffect(
-    React.useCallback(() => {
-      const loadFeeling = async () => {
-        const storedFeeling = await AsyncStorage.getItem('@selectedFeeling');
-        setSelectedFeeling(storedFeeling || null);
-      };
-  
-      loadFeeling();
-  
-      StatusBar.setBackgroundColor('#9381FF');
-    }, [])
-  );
-  useFocusEffect(
-    React.useCallback(() => {
-      StatusBar.setBackgroundColor('#9381FF');
-    }, [])
-  );
 
   
 
@@ -55,6 +37,7 @@ const Home = () => {
     } else {
       console.log("Nenhum sentimento selecionado.");
     }
+    
   };
 
   return (

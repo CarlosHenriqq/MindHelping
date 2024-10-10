@@ -31,9 +31,7 @@ const TabNavigation = () => (
             case 'Call':
             iconSource = require('../assets/img/telefone_nav.png');
             break;    
-            case 'Home':
-            iconSource = require('../assets/img/home_nav.png');
-            break;
+            
             case 'Diario':
             iconSource = require('../assets/img/diario_nav.png');
             break;       
@@ -60,7 +58,7 @@ const TabNavigation = () => (
   >
     <Tabs.Screen name="Perfil" component={Perfil} />
     <Tabs.Screen name="Call" component={Call} />
-    <Tabs.Screen name="Home" component={Home} />
+
     <Tabs.Screen name="Diario" component={Diario} />
     <Tabs.Screen name="Chat" component={Chat} />
     <Tabs.Screen name="Profissionais" component={Psico} />
@@ -75,10 +73,6 @@ export default function Routes() {
       <Stack.Screen name="SignUp" component={SignUp} />
       <Stack.Screen name="Home" component={Home} />
       <Stack.Screen name="TabNavigation" component={TabNavigation} />
-
-    
-   
-
     </Stack.Navigator>
   );
 }

@@ -9,14 +9,14 @@ const Perfil = () => {
 
   const navigation = useNavigation()
 
-
-
   useFocusEffect(
     React.useCallback(() => {
       StatusBar.setBackgroundColor('#9381FF');
     }, [])
   );
+
   const [feeling, setFeeling] = useState('');
+
   useEffect(() => {
     const getFeeling = async () => {
       try {
@@ -30,7 +30,22 @@ const Perfil = () => {
     };
 
     getFeeling();
-  }, []);
+  }, []); // Adicione uma dependência no estado do sentimento
+
+  useEffect(() => {
+    const getFeeling = async () => {
+      try {
+        const storedFeeling = await AsyncStorage.getItem('@selectedFeeling');
+        if (storedFeeling !== null) {
+          setFeeling(storedFeeling);
+        }
+      } catch (e) {
+        console.log("Erro ao ler o sentimento: ", e);
+      }
+    };
+
+    getFeeling();
+  }, [navigation]);
 
   return (
     <View style={styles.screenContainer}>
