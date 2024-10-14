@@ -45,10 +45,11 @@ const Psico = () => {
                             style={styles.imageSearch}
                         />
                     </TouchableOpacity>
-                    {!hideInfo && (
+                   {!hideInfo && (  // aqui ele mostra o conteudo antes de alguem buscar, por exemplo os profissionais mais procurados, 
+                                                                        //ai se pesquisar algum especifico as informações some da tela*/
                     
                     <View>
-                        <Text>OI</Text>
+                      
                         </View>
                  )}
                     

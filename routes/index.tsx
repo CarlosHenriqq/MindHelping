@@ -56,9 +56,9 @@ const TabNavigation = () => (
       headerShown: false,
     })}
   >
+    <Tabs.Screen name="Home" component={Home} options={{ tabBarButton: () => null }}/>
     <Tabs.Screen name="Perfil" component={Perfil} />
     <Tabs.Screen name="Call" component={Call} />
-
     <Tabs.Screen name="Diario" component={Diario} />
     <Tabs.Screen name="Chat" component={Chat} />
     <Tabs.Screen name="Profissionais" component={Psico} />
@@ -71,8 +71,9 @@ export default function Routes() {
       <Stack.Screen name="Inicial" component={Inicial} />
       <Stack.Screen name="Login" component={Login}/>
       <Stack.Screen name="SignUp" component={SignUp} />
-      <Stack.Screen name="Home" component={Home} />
       <Stack.Screen name="TabNavigation" component={TabNavigation} />
+    
+   
     </Stack.Navigator>
   );
 }

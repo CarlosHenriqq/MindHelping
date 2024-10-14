@@ -7,7 +7,7 @@ const Login = () => {
     const navigation = useNavigation();
 
     const handleNavigateToHome = () => {
-        navigation.navigate('Home'); 
+        navigation.navigate('TabNavigation'); 
     };
     useFocusEffect(
         React.useCallback(() => {
