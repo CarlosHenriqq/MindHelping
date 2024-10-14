@@ -13,12 +13,12 @@ const Home = () => {
   );
 
   const [feelings] = useState([
-    { text: "FELIZ", image: require('../../../assets/img/logo.png') },
-    { text: "TRISTE", image: require('../../../assets/img/logo.png') },
-    { text: "COM RAIVA", image: require('../../../assets/img/logo.png') },
-    { text: "ANSIOSO", image: require('../../../assets/img/logo.png') },
-    { text: "COM TEDIO", image: require('../../../assets/img/logo.png') },
-    { text: "CHATO", image: require('../../../assets/img/logo.png') },
+    { text: "FELIZ", image: require('../../../assets/img/slide/feliz.png') },
+    { text: "TRISTE", image: require('../../../assets/img/slide/triste.png') },
+    { text: "COM RAIVA", image: require('../../../assets/img/slide/raiva.png') },
+    { text: "ANSIOSO", image: require('../../../assets/img/slide/ansioso.png') },
+    { text: "COM TEDIO", image: require('../../../assets/img/slide/tedio.png') },
+    { text: "NÃO SEI DIZER", image: require('../../../assets/img/slide/naoseidizer.png') },
   ]);
 
   const [selectedFeeling, setSelectedFeeling] = useState();
@@ -159,8 +159,7 @@ const styles = StyleSheet.create({
   screen: {
     flex: 1,
     backgroundColor: '#e6e6e6',
-    padding:0,
-    margin:0
+ 
     },
   feeling: {
     marginVertical: 20,
@@ -190,10 +189,12 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
   img: {
-    width: 150,
-    height: 150,
+    width: '40%',
+    height: undefined,
+    aspectRatio:1,
     marginVertical: 10,
     alignSelf: 'center',
+    borderRadius:20
   },
  
   slide: {
