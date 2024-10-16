@@ -6,12 +6,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ScrollView } from 'react-native-gesture-handler';
 
 const Home = () => {
-  useFocusEffect(
-    React.useCallback(() => {
-      StatusBar.setBackgroundColor('#e6e6e6');
-    }, [])
-  );
-
   const [feelings] = useState([
     { text: "FELIZ", image: require('../../../assets/img/slide/feliz.png') },
     { text: "TRISTE", image: require('../../../assets/img/slide/triste.png') },
@@ -22,10 +16,27 @@ const Home = () => {
   ]);
 
   const [selectedFeeling, setSelectedFeeling] = useState();
+  const [selectedFeelingIndex, setSelectedFeelingIndex] = useState(true);
   const navigation = useNavigation();
 
+  useFocusEffect(
+    React.useCallback(() => {
+      const loadFeeling = async () => {
+        const storedFeeling = await AsyncStorage.getItem('@selectedFeeling');
+        setSelectedFeeling(storedFeeling || null);
+    
+      };
+
+      loadFeeling();
+
+      StatusBar.setBackgroundColor('#A7BED3');
+    }, [])
+  );
+
   const handlePress = (feeling) => {
+    console.log(`Sentimento selecionado: ${feeling}`)
     setSelectedFeeling(feeling);
+   
   };
 
   const handleContinue = async () => {
@@ -33,7 +44,7 @@ const Home = () => {
       try {
         await AsyncStorage.setItem('@selectedFeeling', selectedFeeling);
         console.log(`Sentimento selecionado: ${selectedFeeling}`);
-        navigation.navigate('TabNavigation');
+        navigation.navigate('Perfil');
       } catch (e) {
         console.log("Erro ao salvar o sentimento: ", e);
       }
@@ -50,17 +61,21 @@ const Home = () => {
             <Text style={styles.userText}>Oi Carlos,</Text>
             <Text style={styles.textFeeling}>Como você está se sentindo?</Text>
           </View>
-          <Image source={require('../../../assets/img/perfil.png')} style={styles.imgUser} />
+          <TouchableOpacity onPress={() => {
+            navigation.navigate('Perfil')
+          handleContinue()}}>
+            <Image source={require('../../../assets/img/perfil.png')} style={styles.imgUser} />
+          </TouchableOpacity>
         </View>
       </View>
-
-      <Swiper
-        loop={true}
-        autoplay={true}
-        autoplayTimeout={5}
-        style={{height:200}}
-        showsPagination={false}
-      >
+      
+      {/* Desabilitar o autoplay para evitar problemas com a seleção */}
+      <Swiper 
+      loop={false} 
+      autoplay={true} 
+      style={{ height: 200 }} 
+      showsPagination={false}  
+      onIndexChanged={(index) => setSelectedFeelingIndex(index)}>
         {feelings.map((item, index) => (
           <View key={index} style={styles.slide}>
             <TouchableOpacity onPress={() => handlePress(item.text)}>
@@ -69,7 +84,6 @@ const Home = () => {
           </View>
         ))}
       </Swiper>
-
       <View style={styles.nextConsulta}>
         <Text style={styles.textConsulta}>Sua próxima consulta: </Text>
         <View style={styles.cardConsulta}>
@@ -77,17 +91,11 @@ const Home = () => {
           <Text>Psicóloga</Text>
           <View style={styles.dadosPsi}>
             <TouchableOpacity>
-              <Image
-                source={require('../../../assets/img/icons/email.png')}
-                style={styles.emailImg}
-              />
+              <Image source={require('../../../assets/img/icons/email.png')} style={styles.emailImg} />
             </TouchableOpacity>
             <Text style={styles.contatoProf}>alessandra.psi@gmail.com</Text>
             <TouchableOpacity>
-              <Image
-                source={require('../../../assets/img/icons/telefone.png')}
-                style={styles.emailImg}
-              />
+              <Image source={require('../../../assets/img/icons/telefone.png')} style={styles.emailImg} />
             </TouchableOpacity>
             <Text style={styles.contatoProf}>+55 18 99756 - 2102</Text>
           </View>
@@ -106,10 +114,7 @@ const Home = () => {
             <Text style={styles.dadosLocConsulta}>Lorem ipsum dolor sit quaerat minus, Birigui - SP </Text>
             <View style={styles.maps}>
               <TouchableOpacity>
-                <Image
-                  source={require('../../../assets/img/icons/maps.png')}
-                  style={styles.mapsImg}
-                />
+                <Image source={require('../../../assets/img/icons/maps.png')} style={styles.mapsImg} />
               </TouchableOpacity>
               <Text style={{ fontWeight: 'normal' }}>Abrir através do Google Maps</Text>
             </View>
@@ -122,39 +127,40 @@ const Home = () => {
         <View style={styles.grid}>
           <View style={styles.card}>
             <TouchableOpacity>
-            <Text style={styles.cardText}>Que tal tentar meditar?</Text>
-            <Image
-              source={require('../../../assets/img/icons/meditacao.png')}
-              style={styles.relaxImg}/>
-              </TouchableOpacity>
+              <Text style={styles.cardText}>Que tal tentarmos meditar?</Text>
+              <Image source={require('../../../assets/img/icons/meditacao.png')} style={styles.relaxImg} />
+            </TouchableOpacity>
           </View>
           <View style={styles.card}>
-          <TouchableOpacity>
-            <Text style={styles.cardText}>Ou conversar com alguém em nossa comunidade?</Text>
-            <Image
-              source={require('../../../assets/img/icons/comunidade.png')}
-              style={styles.relaxImg}/>
-              </TouchableOpacity>
+            <TouchableOpacity>
+              <Text style={styles.cardText}>Ou conversar com a nossa comunidade?</Text>
+              <Image source={require('../../../assets/img/icons/comunidade.png')} style={styles.relaxImg} />
+            </TouchableOpacity>
           </View>
           <View style={styles.card}>
-          <TouchableOpacity>
-            <Text style={styles.cardText}>Talvez um som relaxante</Text>
-            <Image
-              source={require('../../../assets/img/icons/som_relaxante.png')}
-              style={styles.relaxImg}/>
-              </TouchableOpacity>
+            <TouchableOpacity>
+              <Text style={styles.cardText}>Talvez um som relaxante</Text>
+              <Image source={require('../../../assets/img/icons/som_relaxante.png')} style={styles.relaxImg} />
+            </TouchableOpacity>
           </View>
           <View style={styles.card}>
-            <Text style={styles.cardText}>Ou conversar com alguém em nossa comunidade?</Text>
+            <TouchableOpacity>
+              <Text style={styles.cardText}>Por quê não praticar um esporte?</Text>
+              <Image source={require('../../../assets/img/icons/esporte.png')} style={styles.relaxImg} />
+            </TouchableOpacity>
           </View>
+          
         </View>
+        <TouchableOpacity onPress={handleContinue} style={styles.continueButton}>
+        <Text style={styles.continueText}>Continuar</Text>
+      </TouchableOpacity>
       </View>
+      
     </ScrollView>
   );
-}
+};
 
 export default Home;
-
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
@@ -172,7 +178,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   textContainer: {
-    flex: 1, // Garante que o texto ocupe o espaço restante
+    flex: 1, 
+    bottom:10// Garante que o texto ocupe o espaço restante
   },
   userText: {
     fontSize: 18,
@@ -189,21 +196,22 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
   img: {
-    width: '40%',
-    height: undefined,
-    aspectRatio:1,
-    marginVertical: 10,
+    maxWidth: '95%',
+    height: '95%',
     alignSelf: 'center',
-    borderRadius:20
+    borderRadius: 20,
   },
  
   slide: {
-    flex: 1,
+ 
+    width:'100%',
+    height:200,
     justifyContent: 'center',
     alignItems: 'center',
+    position:'relative'
   },
   nextConsulta: {
-    bottom: 10,
+    top: 20,
   },
   textConsulta: {
     fontSize: 16,
@@ -213,9 +221,9 @@ const styles = StyleSheet.create({
     paddingLeft: 15,
   },
   cardConsulta: {
-    backgroundColor: '#ECDAFF',
+    backgroundColor: '#f0f0f0',
     padding: 10,
-    margin: 15,
+    margin: 20,
     borderRadius: 20,
     borderWidth: 1,
   },
@@ -277,7 +285,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around', // Para espaçar os cards
   },
   card: {
-    backgroundColor: '#7E60BF',
+    backgroundColor: '#A7BED3',
     width: '45%', // Cada card vai ocupar 45% da largura
     padding: 15,
     borderRadius: 10,
@@ -287,7 +295,9 @@ const styles = StyleSheet.create({
   },
   cardText:{
     color:'white',
-    alignItems:'flex-start'
+    alignItems:'flex-start',
+    fontWeight:'bold', 
+    paddingBottom:10
   },
   relaxImg:{
     width:'80%',
@@ -295,5 +305,21 @@ const styles = StyleSheet.create({
     aspectRatio:1,
     left:10,
     resizeMode:'contain'
-  }
+  },
+  continueButton: {
+    backgroundColor: '#A7BED3',
+    padding: 15,
+    borderRadius: 10,
+    marginHorizontal: 20,
+    marginTop: 20,
+    alignItems: 'center',
+    borderWidth:1
+  },
+  continueText: {
+    color: 'white',
+    fontSize: 16,
+    fontWeight: 'bold',
+
+
+  },
 });

@@ -8,7 +8,7 @@ const Inicial = () => {
     const navigator = useNavigation();
     useFocusEffect(
         React.useCallback(() => {
-          StatusBar.setBackgroundColor('#FFD8BE');
+          StatusBar.setBackgroundColor('#A7BED3');
         }, [])
       );
 
@@ -33,7 +33,7 @@ const Inicial = () => {
 }
 const styles = StyleSheet.create({
     principal: {
-        backgroundColor: "#FFD8BE",
+        backgroundColor: "#f0f0f0",
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',

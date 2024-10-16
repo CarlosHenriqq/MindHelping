@@ -10,7 +10,7 @@ export default function SignUp() {
 
   useFocusEffect(
     React.useCallback(() => {
-      StatusBar.setBackgroundColor('#FFD8BE');
+      StatusBar.setBackgroundColor('#A7BED3');
     }, [])
   );
 
@@ -87,7 +87,7 @@ export default function SignUp() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFD8BE',
+    backgroundColor: '#A7BED3',
   },
   scrollViewContent: {
     flexGrow: 1,
