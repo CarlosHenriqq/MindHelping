@@ -5,6 +5,7 @@ import Swiper from 'react-native-swiper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ScrollView } from 'react-native-gesture-handler';
 
+
 const Home = () => {
   const [feelings] = useState([
     { text: "FELIZ", image: require('../../../assets/img/slide/feliz.png') },
@@ -12,7 +13,7 @@ const Home = () => {
     { text: "COM RAIVA", image: require('../../../assets/img/slide/raiva.png') },
     { text: "ANSIOSO", image: require('../../../assets/img/slide/ansioso.png') },
     { text: "COM TEDIO", image: require('../../../assets/img/slide/tedio.png') },
-    { text: "NÃO SEI DIZER", image: require('../../../assets/img/slide/naoseidizer.png') },
+    { text: "NÃO SEI DIZER", image: require('../../../assets/img/slide/indeciso.png') },
   ]);
 
   const [selectedFeeling, setSelectedFeeling] = useState();
@@ -71,8 +72,9 @@ const Home = () => {
       
       {/* Desabilitar o autoplay para evitar problemas com a seleção */}
       <Swiper 
-      loop={false} 
+      loop={true} 
       autoplay={true} 
+      autoplayTimeout={8}
       style={{ height: 200 }} 
       showsPagination={false}  
       onIndexChanged={(index) => setSelectedFeelingIndex(index)}>
@@ -84,6 +86,7 @@ const Home = () => {
           </View>
         ))}
       </Swiper>
+    
       <View style={styles.nextConsulta}>
         <Text style={styles.textConsulta}>Sua próxima consulta: </Text>
         <View style={styles.cardConsulta}>
@@ -94,6 +97,8 @@ const Home = () => {
               <Image source={require('../../../assets/img/icons/email.png')} style={styles.emailImg} />
             </TouchableOpacity>
             <Text style={styles.contatoProf}>alessandra.psi@gmail.com</Text>
+            </View>
+            <View style={styles.telePsi}>
             <TouchableOpacity>
               <Image source={require('../../../assets/img/icons/telefone.png')} style={styles.emailImg} />
             </TouchableOpacity>
@@ -151,9 +156,7 @@ const Home = () => {
           </View>
           
         </View>
-        <TouchableOpacity onPress={handleContinue} style={styles.continueButton}>
-        <Text style={styles.continueText}>Continuar</Text>
-      </TouchableOpacity>
+        
       </View>
       
     </ScrollView>
@@ -179,11 +182,12 @@ const styles = StyleSheet.create({
   },
   textContainer: {
     flex: 1, 
-    bottom:10// Garante que o texto ocupe o espaço restante
+    top: 2// Garante que o texto ocupe o espaço restante
   },
   userText: {
     fontSize: 18,
     fontFamily: 'Roboto-Regular',
+    top:5
   },
   textFeeling: {
     fontSize: 18,
@@ -215,10 +219,10 @@ const styles = StyleSheet.create({
   },
   textConsulta: {
     fontSize: 16,
-    marginBottom: 5,
+    marginBottom: -5,
     fontFamily: 'Mukta-Bold', // Fonte personalizada
     textAlign: 'left',
-    paddingLeft: 15,
+    paddingLeft: 22,
   },
   cardConsulta: {
     backgroundColor: '#f0f0f0',
@@ -230,6 +234,7 @@ const styles = StyleSheet.create({
   nameProf: {
     fontSize: 18,
     fontWeight: 'bold',
+    
   },
   contatoProf: {
     fontWeight: 'bold',
@@ -240,8 +245,14 @@ const styles = StyleSheet.create({
   },
   dadosPsi: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: 20,
+    gap:10,
+    
+    marginTop:5
+  },
+  telePsi:{
+    flexDirection:'row',
+    gap:10,
+    marginBottom:5
   },
   dadoConsulta: {
     flexDirection: 'row',
@@ -276,7 +287,7 @@ const styles = StyleSheet.create({
     marginBottom: 5,
     fontFamily: 'Mukta-Bold', // Fonte personalizada
     textAlign: 'left',
-    paddingLeft: 15,
+    paddingLeft: 10,
     
   },
   grid: {
