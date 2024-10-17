@@ -11,7 +11,7 @@ const Login = () => {
     };
     useFocusEffect(
         React.useCallback(() => {
-          ;
+          StatusBar.setBackgroundColor('#A7BED3');
         }, [])
       );
     
@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
         width: '110%',
         paddingHorizontal: 20,
         paddingVertical: 2,
-        color:'white',
+        backgroundColor:'white',
         borderTopLeftRadius: 70,
         borderTopRightRadius: 70,
         borderBottomLeftRadius: 28,
@@ -81,14 +81,15 @@ const styles = StyleSheet.create({
         
     },
     input: {
-       
+       height:40,
         borderRadius: 10,
         borderColor: '#000000',
         width: '80%',
         paddingHorizontal: 10,
         borderWidth: 1,
        backgroundColor:'#f1f1f1',
-        fontWeight:'bold'
+        fontWeight:'bold',
+        alignItems:'center'
     },
     texto: {
         fontSize: 20,
@@ -121,7 +122,7 @@ const styles = StyleSheet.create({
     button: {
         borderRadius: 20,
         backgroundColor:'#ffffff',
-        height: 40,
+        height: 30,
         width: 200,
         alignItems: 'center',
         justifyContent: 'center',

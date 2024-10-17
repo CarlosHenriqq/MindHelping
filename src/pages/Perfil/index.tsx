@@ -7,30 +7,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const Perfil = () => {
   const navigation = useNavigation();
-  const [feeling, setFeeling] = useState('');
-
-  useFocusEffect(
-    React.useCallback(() => {
-      const getFeeling = async () => {
-        try {
-          const storedFeeling = await AsyncStorage.getItem('@selectedFeeling');
-          if (storedFeeling !== null) {
-            setFeeling(storedFeeling);
-          }
-        } catch (e) {
-          console.log("Erro ao ler o sentimento: ", e);
-        }
-      };
-
-      getFeeling();
-      
-
-      // Limpeza opcional (se necessário)
-      return () => {
-        setFeeling(''); // Limpa o sentimento se você quiser redefinir ao sair
-      };
-    }, [])
-  );
+  
 
   return (
     <View style={styles.screenContainer}>
@@ -40,8 +17,12 @@ const Perfil = () => {
             source={require('../../../assets/img/seta.png')}
             style={styles.imagemSetaHeader}
           />
-          <Text style={styles.textoVoltar}>Voltar</Text>
+          
         </TouchableOpacity>
+        
+      </View>
+      <View style={styles.Title}>
+      <Text style={styles.textTitle}>Perfil</Text>
       </View>
       <View style={styles.profileContainer}>
         <View style={styles.profileImageContainer}>
@@ -53,11 +34,11 @@ const Perfil = () => {
         <View style={styles.nameEmailContainer}>
           <Text style={styles.nome}>Carlos Henrique</Text>
           <Text style={styles.email}>carloshenriquelrs@gmail.com</Text>
-          <Text style={styles.feeling}>Hoje estou me sentindo: {feeling}</Text>
+         
         </View>
       </View>
       <View style={styles.containerPerfil}>
-        <Text style={styles.textPerfil}>PERFIL</Text>
+        
         <View style={styles.infoPerfil}>
           <Text style={styles.textInfoPerfil}>Configurações do usuário</Text>
           <Image
@@ -74,7 +55,7 @@ const Perfil = () => {
         </View>
       </View>
       <View style={styles.containerSettings}>
-        <Text style={styles.textPerfil}>CONFIGURAÇÕES</Text>
+        
         <View style={styles.infoPerfil}>
           <Text style={styles.textInfoPerfil}>Ativar Notificações</Text>
           <Image
@@ -100,44 +81,50 @@ const styles = StyleSheet.create({
   screenContainer: {
     flex: 1,
     backgroundColor: '#ffffff',
-    borderTopLeftRadius: 30,
-    borderTopRightRadius: 30,
     height: 'auto',
   },
   Seta: {
-    backgroundColor: '#A7BED3',
+    backgroundColor: '#ffffff',
     alignItems: 'flex-start',
+   
+  },
+  Title:{
+    alignItems:'center',
+    bottom:10
+  },
+  textTitle:{
+    fontSize:20,
+    fontWeight:'bold',
+    color:'#000000'
   },
   botaoVoltar: {
     flexDirection: 'row',
     alignItems: 'center',
   },
   imagemSetaHeader: {
-    width: 20,
-    height: 30,
-    marginTop: 10,
+    width: 30,
+    height: 20,
+    marginTop: 20,
     marginBottom: 10,
     marginRight: 5,
     marginLeft: 10,
     transform: [{ scaleX: -1 }],
   },
-  textoVoltar: {
-    fontSize: 16,
-  },
+ 
   profileContainer: {
-    flexDirection: 'row',
+    flexDirection: 'column',
     alignItems: 'center',
-    paddingStart: 30,
+    marginTop:20, 
     paddingBottom: 20,
     borderBottomWidth: 0.2,
-    backgroundColor: '#A7BED3',
+    backgroundColor: '#ffffff',
   },
   profileImageContainer: {
     width: 120,
     height: 120,
     borderRadius: 60,
     overflow: 'hidden',
-    backgroundColor: '#3A4E48',
+    backgroundColor: '#ffffff',
     justifyContent: 'center',
     alignItems: 'center',
     elevation: 5,
@@ -153,7 +140,8 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 20,
   },
   nameEmailContainer: {
-    marginLeft: 15,
+    marginTop: 15,
+    alignItems:'center'
   },
   nome: {
     fontSize: 22,
@@ -162,7 +150,7 @@ const styles = StyleSheet.create({
     color: '#000000',
   },
   email: {
-    fontSize: 16,
+    fontSize: 14,
     color: '#000000',
     marginTop: 5,
     fontStyle: 'italic',
@@ -206,7 +194,7 @@ const styles = StyleSheet.create({
     marginLeft: 'auto',
   },
   containerSettings: {
-    marginTop: 30,
+    marginTop: 0,
     paddingHorizontal: 20,
     backgroundColor: '#ffffff',
   },

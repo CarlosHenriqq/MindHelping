@@ -13,7 +13,7 @@ const Home = () => {
     { text: "COM RAIVA", image: require('../../../assets/img/slide/raiva.png') },
     { text: "ANSIOSO", image: require('../../../assets/img/slide/ansioso.png') },
     { text: "COM TEDIO", image: require('../../../assets/img/slide/tedio.png') },
-    { text: "NÃO SEI DIZER", image: require('../../../assets/img/slide/indeciso.png') },
+    { text: "NEUTRO", image: require('../../../assets/img/slide/indeciso.png') },
   ]);
 
   const [selectedFeeling, setSelectedFeeling] = useState();
@@ -33,26 +33,60 @@ const Home = () => {
       StatusBar.setBackgroundColor('#A7BED3');
     }, [])
   );
-
-  const handlePress = (feeling) => {
-    console.log(`Sentimento selecionado: ${feeling}`)
-    setSelectedFeeling(feeling);
-   
-  };
-
-  const handleContinue = async () => {
-    if (selectedFeeling) {
-      try {
-        await AsyncStorage.setItem('@selectedFeeling', selectedFeeling);
-        console.log(`Sentimento selecionado: ${selectedFeeling}`);
-        navigation.navigate('Perfil');
-      } catch (e) {
-        console.log("Erro ao salvar o sentimento: ", e);
+  const incrementFeelingCount = async (feeling) => {
+    try {
+      const storedCounts = await AsyncStorage.getItem('@feelingCounts');
+      const counts = storedCounts ? JSON.parse(storedCounts) : { feliz: 0, triste: 0, com_raiva: 0, ansioso: 0, com_tedio: 0, neutro: 0 };
+  
+      switch(feeling.toLowerCase()) {
+        case 'feliz':
+          counts.feliz += 1;
+          break;
+        case 'triste':
+          counts.triste += 1;
+          break;
+        case 'com raiva':
+          counts.com_raiva += 1;
+          break;
+        case 'ansioso':
+          counts.ansioso += 1;
+          break;
+        case 'com tedio':
+          counts.com_tedio += 1;
+          break;
+        case 'neutro':
+          counts.neutro += 1;
+          break;
+        default:
+          break;
       }
-    } else {
-      console.log("Nenhum sentimento selecionado.");
+  
+      await AsyncStorage.setItem('@feelingCounts', JSON.stringify(counts));
+    } catch (e) {
+      console.log("Erro ao incrementar a contagem de sentimento: ", e);
     }
   };
+  
+  const handlePress = async (feeling) => {
+    setSelectedFeeling(feeling);
+    const today = new Date().toISOString().split('T')[0]; // Formato YYYY-MM-DD
+    try {
+      const storedFeelings = await AsyncStorage.getItem('@dailyFeelings');
+      const dailyFeelings = storedFeelings ? JSON.parse(storedFeelings) : {};
+  
+      dailyFeelings[today] = feeling;
+  
+      await AsyncStorage.setItem('@dailyFeelings', JSON.stringify(dailyFeelings));
+      console.log(`Sentimento de hoje (${today}): ${feeling}`);
+    } catch (e) {
+      console.log("Erro ao salvar o sentimento diário: ", e);
+    }
+  };
+  
+  
+  
+
+  
 
   return (
     <ScrollView style={styles.screen}>
@@ -64,7 +98,7 @@ const Home = () => {
           </View>
           <TouchableOpacity onPress={() => {
             navigation.navigate('Perfil')
-          handleContinue()}}>
+          }}>
             <Image source={require('../../../assets/img/perfil.png')} style={styles.imgUser} />
           </TouchableOpacity>
         </View>
