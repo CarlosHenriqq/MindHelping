@@ -10,9 +10,9 @@ const Home = () => {
   const [feelings] = useState([
     { text: "FELIZ", image: require('../../../assets/img/slide/feliz.png') },
     { text: "TRISTE", image: require('../../../assets/img/slide/triste.png') },
-    { text: "COM RAIVA", image: require('../../../assets/img/slide/raiva.png') },
+    { text: "RAIVA", image: require('../../../assets/img/slide/raiva.png') },
     { text: "ANSIOSO", image: require('../../../assets/img/slide/ansioso.png') },
-    { text: "COM TEDIO", image: require('../../../assets/img/slide/tedio.png') },
+    { text: "TEDIO", image: require('../../../assets/img/slide/tedio.png') },
     { text: "NEUTRO", image: require('../../../assets/img/slide/indeciso.png') },
   ]);
 
@@ -36,7 +36,7 @@ const Home = () => {
   const incrementFeelingCount = async (feeling) => {
     try {
       const storedCounts = await AsyncStorage.getItem('@feelingCounts');
-      const counts = storedCounts ? JSON.parse(storedCounts) : { feliz: 0, triste: 0, com_raiva: 0, ansioso: 0, com_tedio: 0, neutro: 0 };
+      const counts = storedCounts ? JSON.parse(storedCounts) : { feliz: 0, triste: 0, raiva: 0, ansioso: 0, tedio: 0, neutro: 0 };
   
       switch(feeling.toLowerCase()) {
         case 'feliz':
@@ -45,14 +45,14 @@ const Home = () => {
         case 'triste':
           counts.triste += 1;
           break;
-        case 'com raiva':
+        case 'raiva':
           counts.com_raiva += 1;
           break;
         case 'ansioso':
           counts.ansioso += 1;
           break;
-        case 'com tedio':
-          counts.com_tedio += 1;
+        case 'tedio':
+          counts.tedio += 1;
           break;
         case 'neutro':
           counts.neutro += 1;
@@ -108,7 +108,7 @@ const Home = () => {
       <Swiper 
       loop={true} 
       autoplay={true} 
-      autoplayTimeout={8}
+      autoplayTimeout={5}
       style={{ height: 200 }} 
       showsPagination={false}  
       onIndexChanged={(index) => setSelectedFeelingIndex(index)}>
