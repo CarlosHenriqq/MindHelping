@@ -33,7 +33,7 @@ const Home = () => {
       StatusBar.setBackgroundColor('#A7BED3');
     }, [])
   );
-  const incrementFeelingCount = async (feeling) => {
+  /*const incrementFeelingCount = async (feeling) => {
     try {
       const storedCounts = await AsyncStorage.getItem('@feelingCounts');
       const counts = storedCounts ? JSON.parse(storedCounts) : { feliz: 0, triste: 0, raiva: 0, ansioso: 0, tedio: 0, neutro: 0 };
@@ -65,7 +65,7 @@ const Home = () => {
     } catch (e) {
       console.log("Erro ao incrementar a contagem de sentimento: ", e);
     }
-  };
+  };*/
   
   const handlePress = async (feeling) => {
     setSelectedFeeling(feeling);
@@ -82,7 +82,26 @@ const Home = () => {
       console.log("Erro ao salvar o sentimento diário: ", e);
     }
   };
+  const registerFeelingWithTime = async (feeling) => {
+    const currentTime = new Date().toISOString().split('T')[1].substring(0, 5); // Formato HH:MM
+    const today = new Date().toISOString().split('T')[0]; // Formato YYYY-MM-DD
   
+    try {
+      const storedFeelings = await AsyncStorage.getItem('@dailyFeelings');
+      const dailyFeelings = storedFeelings ? JSON.parse(storedFeelings) : {};
+      
+      if (!Array.isArray (dailyFeelings[today])) {
+        dailyFeelings[today] = [];
+      }
+  
+      dailyFeelings[today].push({ feeling, time: currentTime });
+  
+      await AsyncStorage.setItem('@dailyFeelings', JSON.stringify(dailyFeelings));
+      console.log(`Sentimento registrado às ${currentTime}: ${feeling}`);
+    } catch (e) {
+      console.log("Erro ao registrar o sentimento: ", e);
+    }
+  };
   
   
 
@@ -114,7 +133,10 @@ const Home = () => {
       onIndexChanged={(index) => setSelectedFeelingIndex(index)}>
         {feelings.map((item, index) => (
           <View key={index} style={styles.slide}>
-            <TouchableOpacity onPress={() => handlePress(item.text)}>
+            <TouchableOpacity onPress={() =>{ 
+              registerFeelingWithTime(item.text)
+               handlePress(item.text)
+               }}>
               <Image source={item.image} style={styles.img} />
             </TouchableOpacity>
           </View>

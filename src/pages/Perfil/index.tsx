@@ -1,29 +1,28 @@
 import React, { useEffect, useState } from 'react';
-import { Text, View, StyleSheet, StatusBar, Image } from 'react-native';
-import { useFocusEffect, useNavigation } from '@react-navigation/native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import Header from '../Header';
+import { Text, View, StyleSheet, StatusBar, Image, Dimensions, ScrollView } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { LineChart } from 'react-native-chart-kit'; // Certifique-se de ter a biblioteca instalada corretamente
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Perfil = () => {
   const navigation = useNavigation();
-  
 
   return (
-    <View style={styles.screenContainer}>
+    <ScrollView style={styles.screenContainer}>
       <View style={styles.Seta}>
         <TouchableOpacity onPress={() => navigation.navigate('Home')} style={styles.botaoVoltar}>
           <Image
             source={require('../../../assets/img/seta.png')}
             style={styles.imagemSetaHeader}
           />
-          
         </TouchableOpacity>
-        
       </View>
+      
       <View style={styles.Title}>
-      <Text style={styles.textTitle}>Perfil</Text>
+        <Text style={styles.textTitle}>Perfil</Text>
       </View>
+      
       <View style={styles.profileContainer}>
         <View style={styles.profileImageContainer}>
           <Image
@@ -34,11 +33,10 @@ const Perfil = () => {
         <View style={styles.nameEmailContainer}>
           <Text style={styles.nome}>Carlos Henrique</Text>
           <Text style={styles.email}>carloshenriquelrs@gmail.com</Text>
-         
         </View>
       </View>
+
       <View style={styles.containerPerfil}>
-        
         <View style={styles.infoPerfil}>
           <Text style={styles.textInfoPerfil}>Configurações do usuário</Text>
           <Image
@@ -54,8 +52,8 @@ const Perfil = () => {
           />
         </View>
       </View>
+
       <View style={styles.containerSettings}>
-        
         <View style={styles.infoPerfil}>
           <Text style={styles.textInfoPerfil}>Ativar Notificações</Text>
           <Image
@@ -71,7 +69,11 @@ const Perfil = () => {
           />
         </View>
       </View>
-    </View>
+
+     
+
+      
+    </ScrollView>
   );
 };
 
@@ -86,16 +88,15 @@ const styles = StyleSheet.create({
   Seta: {
     backgroundColor: '#ffffff',
     alignItems: 'flex-start',
-   
   },
   Title:{
-    alignItems:'center',
-    bottom:10
+    alignItems: 'center',
+    bottom: 10,
   },
   textTitle:{
-    fontSize:20,
-    fontWeight:'bold',
-    color:'#000000'
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#000000',
   },
   botaoVoltar: {
     flexDirection: 'row',
@@ -110,11 +111,10 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     transform: [{ scaleX: -1 }],
   },
- 
   profileContainer: {
     flexDirection: 'column',
     alignItems: 'center',
-    marginTop:20, 
+    marginTop: 20, 
     paddingBottom: 20,
     borderBottomWidth: 0.2,
     backgroundColor: '#ffffff',
@@ -141,7 +141,7 @@ const styles = StyleSheet.create({
   },
   nameEmailContainer: {
     marginTop: 15,
-    alignItems:'center'
+    alignItems: 'center',
   },
   nome: {
     fontSize: 22,
@@ -155,11 +155,6 @@ const styles = StyleSheet.create({
     marginTop: 5,
     fontStyle: 'italic',
   },
-  feeling: {
-    fontSize: 14,
-    color: '#000000',
-    marginTop: 8,
-  },
   containerPerfil: {
     backgroundColor: '#ffffff',
     marginTop: -10,
@@ -170,14 +165,6 @@ const styles = StyleSheet.create({
     width: '100%',
     overflow: 'hidden',
     zIndex: 0,
-  },
-  textPerfil: {
-    fontSize: 16,
-    marginTop: 10,
-    fontWeight: 'bold',
-    borderColor: 'black',
-    paddingBottom: 5,
-    marginStart: 5,
   },
   infoPerfil: {
     padding: 15,
@@ -197,5 +184,24 @@ const styles = StyleSheet.create({
     marginTop: 0,
     paddingHorizontal: 20,
     backgroundColor: '#ffffff',
+  },
+  legendContainer: {
+    marginTop: 20,
+    backgroundColor: '#f0f4f8',
+    padding: 10,
+    borderRadius: 10,
+  },
+  legendTitle: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    marginBottom: 10,
+  },
+  legendItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginVertical: 5,
+  },
+  legendText: {
+    fontSize: 14,
   },
 });
