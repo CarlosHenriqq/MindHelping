@@ -8,7 +8,7 @@ const Inicial = () => {
     const navigator = useNavigation();
     useFocusEffect(
         React.useCallback(() => {
-          StatusBar.setBackgroundColor('#A7BED3');
+          StatusBar.setBackgroundColor('#808f82');
         }, [])
       );
 
@@ -24,7 +24,7 @@ const Inicial = () => {
                 <TouchableOpacity onPress={() => navigator.navigate('SignUp')} style={styles.button}>
                     <Text style={styles.newUser}>NOVO USUÁRIO</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => navigator.navigate('Login')} >
+                <TouchableOpacity onPress={() => navigator.navigate('Login')} style={styles.buttonAcess}>
                     <Text style={styles.buttonText}>ACESSAR</Text>
                 </TouchableOpacity>
             </Animatable.View>
@@ -33,16 +33,17 @@ const Inicial = () => {
 }
 const styles = StyleSheet.create({
     principal: {
-        backgroundColor: "#f0f0f0",
+        backgroundColor: "#808f82",
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
     },
     imagem: {
-        width: '50%',
-        maxHeight: '50%',
-        marginBottom: 30,
+        width: '80%',
+        maxHeight: '60%',
+        bottom: 60,
         marginTop: 0,
+        alignItems:'center'
 
     },
     textButtonContainer: {
@@ -52,18 +53,40 @@ const styles = StyleSheet.create({
         marginBottom: 20,
         alignItems: 'center',
     
-        marginTop: 135,
+        marginTop: 0,
     },
     button: {
         borderRadius: 15,
-       
+       backgroundColor:'#EDEDED',
         height: 40,
         width: 270,
         alignItems: 'center',
         justifyContent: 'center',
         marginVertical: 10,
-        borderColor: '#000000',
-        borderWidth: 2,
+        shadowColor: '#000000',
+    shadowRadius: 10,
+    shadowOpacity: 0.25,
+    shadowOffset: { width: 0, height: 2 },
+    elevation: 5,
+    borderWidth:1
+       
+
+    },
+    buttonAcess: {
+        borderRadius: 15,
+       backgroundColor:'#EDEDED',
+        height: 40,
+        width: 200,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginVertical: 10,
+        shadowColor: '#000000',
+    shadowRadius: 10,
+    shadowOpacity: 0.25,
+    shadowOffset: { width: 0, height: 2 },
+    elevation: 5,
+    borderWidth:1
+       
 
     },
     buttonText: {

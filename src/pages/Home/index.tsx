@@ -30,7 +30,7 @@ const Home = () => {
 
       loadFeeling();
 
-      StatusBar.setBackgroundColor('#A7BED3');
+      ;
     }, [])
   );
   /*const incrementFeelingCount = async (feeling) => {
@@ -223,7 +223,7 @@ export default Home;
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    backgroundColor: '#e6e6e6',
+    backgroundColor: '#ededed',
  
     },
   feeling: {
@@ -268,7 +268,8 @@ const styles = StyleSheet.create({
     height:200,
     justifyContent: 'center',
     alignItems: 'center',
-    position:'relative'
+    position:'relative',
+   
   },
   nextConsulta: {
     top: 20,
@@ -285,7 +286,11 @@ const styles = StyleSheet.create({
     padding: 10,
     margin: 20,
     borderRadius: 20,
-    borderWidth: 1,
+    shadowColor: '#000000',
+    shadowRadius: 10,
+    shadowOpacity: 0.25,
+    shadowOffset: { width: 0, height: 2 },
+    elevation: 5,
   },
   nameProf: {
     fontSize: 18,
@@ -352,11 +357,12 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around', // Para espaçar os cards
   },
   card: {
-    backgroundColor: '#A7BED3',
+    backgroundColor: '#A1B3A2',
     width: '45%', // Cada card vai ocupar 45% da largura
     padding: 15,
     borderRadius: 10,
     marginVertical: 10,
+    
     
     
   },

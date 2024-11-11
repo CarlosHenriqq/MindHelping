@@ -9,13 +9,6 @@ const Login = () => {
     const handleNavigateToHome = () => {
         navigation.navigate('TabNavigation'); 
     };
-    useFocusEffect(
-        React.useCallback(() => {
-          StatusBar.setBackgroundColor('#A7BED3');
-        }, [])
-      );
-    
-    
 
     return (
         <KeyboardAvoidingView style={styles.principal} behavior="padding">
@@ -31,22 +24,22 @@ const Login = () => {
                 <TextInput
                     placeholder='Digite seu email'
                     style={styles.input}
-                    placeholderTextColor="#000000"
+                    placeholderTextColor="#6D6D6D"
                 />
                 <Text style={styles.texto}>Senha:</Text>
                 <TextInput 
                     placeholder='Digite sua senha'
                     style={styles.input}
                     secureTextEntry={true} 
-                    placeholderTextColor='#000000'
+                    placeholderTextColor='#6D6D6D'
                 />
                 <Animatable.View style={styles.textButtonContainer}>
                     <TouchableOpacity onPress={handleNavigateToHome} style={styles.button}>
                         <Text style={styles.buttonText}>ACESSAR</Text> 
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.senha}>
-                    <Text style={styles.textSenha}>Esqueceu sua senha?</Text>
-                </TouchableOpacity>
+                        <Text style={styles.textSenha}>Esqueceu sua senha?</Text>
+                    </TouchableOpacity>
                 </Animatable.View>
             </Animatable.View>
         </KeyboardAvoidingView>
@@ -55,85 +48,73 @@ const Login = () => {
 
 const styles = StyleSheet.create({
     principal: {
-        backgroundColor: "#A7BED3",
+        backgroundColor: "#808f82",
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
     },
     imagem: {
-        width: '60%',
-        maxHeight: '50%',
-        marginBottom: 10,
-        marginTop: 50
+        width: '70%',
+        maxHeight: '40%',
+        marginBottom: 20,
     },
     inputContainer: {
         alignItems: 'center',
         justifyContent: 'center',
-        width: '110%',
-        paddingHorizontal: 20,
-        paddingVertical: 2,
-        backgroundColor:'white',
-        borderTopLeftRadius: 70,
-        borderTopRightRadius: 70,
-        borderBottomLeftRadius: 28,
-        borderBottomRightRadius: 28,
+        width: '100%',
+        padding: 20,
+        backgroundColor: '#ededed',
+        borderTopLeftRadius: 40,
+        borderTopRightRadius: 40,
         flex: 2,
-        
     },
     input: {
-       height:40,
-        borderRadius: 10,
-        borderColor: '#000000',
+        height: 45,
+        borderRadius: 8,
+        borderColor: '#ccc',
         width: '80%',
-        paddingHorizontal: 10,
+        paddingHorizontal: 15,
         borderWidth: 1,
-       backgroundColor:'#f1f1f1',
-        fontWeight:'bold',
-        alignItems:'center'
+        backgroundColor: '#FFF',
+        fontWeight: 'bold',
+        marginBottom: 15,
     },
     texto: {
-        fontSize: 20,
-        color: '#000000',
-        
+        fontSize: 18,
+        color: '#333',
         alignSelf: 'flex-start',
-        marginBottom: 10,
+        marginBottom: 8,
         marginTop: 5,
         paddingLeft: 45
     },
     textSenha: {
-        color: '#000000',
-        fontStyle: 'italic'
+        color: '#555',
+        fontStyle: 'italic',
     },
     senha: {
         alignItems: 'center',
-        textAlign: 'center',
-        alignSelf: 'center',
-        textAlignVertical: 'auto',
-        
-    },
-    textButtonContainer: {
-        flexDirection: 'column',
-        justifyContent: 'space-between',
-        width: '77%',
-        marginBottom: 20,
-        alignItems: 'center',
         marginTop: 10,
     },
+    textButtonContainer: {
+        width: '100%',
+        alignItems: 'center',
+        marginTop: 20,
+    },
     button: {
-        borderRadius: 20,
-        backgroundColor:'#ffffff',
-        height: 30,
-        width: 200,
+        borderRadius: 8,
+        backgroundColor: '#ffffff',
+        height: 45,
+        width: '80%',
         alignItems: 'center',
         justifyContent: 'center',
         marginVertical: 10,
-        borderColor: '#000000',
+        borderColor: '#ccc',
         borderWidth: 1,
     },
     buttonText: {
-        color: '#000000',
-        fontWeight:'bold',
-        fontSize: 18
+        color: '#333',
+        fontWeight: 'bold',
+        fontSize: 16,
     },
 });
 

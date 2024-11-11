@@ -10,7 +10,7 @@ export default function SignUp() {
 
   useFocusEffect(
     React.useCallback(() => {
-      StatusBar.setBackgroundColor('#A7BED3');
+      StatusBar.setBackgroundColor('#808F82');
     }, [])
   );
 
@@ -61,7 +61,7 @@ export default function SignUp() {
               value={toggleCheck1}
               onValueChange={(newValue) => setToggleCheck1(newValue)}
               style={styles.check}
-              tintColors={{ true: '#A7BED3', false: '#000000' }}
+              tintColors={{ true: '#808F82', false: '#000000' }}
             />
             <Text style={styles.title}>Aceito os termos e condições</Text>
           </View>
@@ -71,7 +71,7 @@ export default function SignUp() {
               value={toggleCheck2}
               onValueChange={(newValue) => setToggleCheck2(newValue)}
               style={styles.check}
-              tintColors={{ true: '#A7BED3', false: '#000000' }}
+              tintColors={{ true: '#808F82', false: '#000000' }}
             />
             <Text style={styles.title}>Autorizo o envio de notificações</Text>
           </View>
@@ -87,7 +87,7 @@ export default function SignUp() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#A7BED3',
+    backgroundColor: '#808F82',
   },
   scrollViewContent: {
     flexGrow: 1,
@@ -105,7 +105,7 @@ const styles = StyleSheet.create({
     height: 148,
   },
   register: {
-    backgroundColor: '#f0f0f0',
+    backgroundColor: '#ededed',
     width: '100%',
     alignItems: 'center',
     borderRadius: 20,
@@ -115,7 +115,7 @@ const styles = StyleSheet.create({
   },
   textoI: {
     alignSelf: 'flex-start',
-    paddingLeft:10,
+    paddingLeft:-0,
     marginTop: 10,
     marginBottom: 3,
     color:'#000000',
@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderRadius: 10,
     width: 400,
-    justifyContent: 'flex-start',
+    left:5,
     paddingStart: 10,
     height: 40,
     marginBottom: 10,

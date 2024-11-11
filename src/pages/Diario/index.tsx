@@ -3,9 +3,7 @@ import React, { useRef, useState } from 'react';
 import { View, StyleSheet, TextInput, KeyboardAvoidingView, Platform, ScrollView, Text, TouchableOpacity, FlatList, Image, StatusBar } from 'react-native';
 
 const Diario = () => {
-    7
-
-    const navigation = useNavigation()
+    const navigation = useNavigation();
     // Referências para os TextInput
     const inputRefs = Array.from({ length: 13 }, () => useRef(null));
 
@@ -105,11 +103,10 @@ const Diario = () => {
 
         handleGoBack(); // Voltar para a tela de visualização
     };
+
     useFocusEffect(
         React.useCallback(() => {
-
-
-            StatusBar.setBackgroundColor('#A7BED3');
+            StatusBar.setBackgroundColor('#808f82');
         }, [])
     );
 
@@ -123,12 +120,9 @@ const Diario = () => {
                     <ScrollView contentContainerStyle={styles.scrollView}>
                         <View style={styles.Seta}>
                             <TouchableOpacity onPress={() => {
-                                {
-                                    saveEntry()
-                                    handleGoBack()
-                                }
-                            }
-                            } style={styles.botaoVoltar}>
+                                saveEntry();
+                                handleGoBack();
+                            }} style={styles.botaoVoltar}>
                                 <Image
                                     source={require('../../../assets/img/seta.png')}
                                     style={styles.imagemSetaHeader}
@@ -157,13 +151,11 @@ const Diario = () => {
                                 <Text style={styles.textBotao}>PRÓXIMA PÁGINA</Text>
                             </TouchableOpacity>
                         </View>
-
                     </ScrollView>
                 </KeyboardAvoidingView>
             ) : (
                 <View style={styles.entryListContainer}>
-                    <TouchableOpacity onPress={() => { navigation.navigate('Home') }
-                    } style={styles.botaoVoltar}>
+                    <TouchableOpacity onPress={() => { navigation.navigate('Home'); }} style={styles.botaoVoltar}>
                         <Image
                             source={require('../../../assets/img/seta.png')}
                             style={styles.imagemSetaHeader}
@@ -174,13 +166,13 @@ const Diario = () => {
                         <FlatList
                             data={entries}
                             keyExtractor={(item) => item.id}
-                            renderItem={({ item, index }) => (
+                            renderItem={({ item }) => (
                                 <View style={styles.entryItem}>
                                     <View style={styles.entryContent}>
                                         <Text style={styles.entryText}>{item.date}</Text>
                                         <Text style={styles.previewText}>{item.preview}</Text>
                                     </View>
-                                    <TouchableOpacity onPress={() => {/* função de deletar aqui */ }}>
+                                    <TouchableOpacity onPress={() => { /* função de deletar aqui */ }}>
                                         <Image
                                             source={require('../../../assets/img/lixeira.png')}
                                             style={styles.lixeira}
@@ -201,6 +193,9 @@ const Diario = () => {
 
 export default Diario;
 
+
+
+
 const styles = StyleSheet.create({
     containerDiarioView: {
         flex: 1,
@@ -214,7 +209,6 @@ const styles = StyleSheet.create({
     },
     Title: {
         alignItems: 'center',
-        //bottom: 10,
     },
     textTitle: {
         fontSize: 20,
@@ -228,7 +222,6 @@ const styles = StyleSheet.create({
     imagemSetaHeader: {
         width: 20,
         height: 20,
-        //
         marginBottom: 10,
         marginRight: 5,
         marginLeft: 10,
@@ -243,9 +236,8 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         fontSize: 24,
         textAlign: 'center',
-        //marginBottom: 20,
         color: '#ffffff',
-        top:20
+        top: 20,
     },
     containerDiario: {
         flexDirection: 'column',
@@ -286,7 +278,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 0,
         paddingVertical: 0,
         padding: 16,
-        backgroundColor: '#A7BED3',
+        backgroundColor: '#808f82',
     },
     listContainer: {
         backgroundColor: '#f0f0f0',
@@ -295,12 +287,12 @@ const styles = StyleSheet.create({
         borderTopRightRadius: 20,
         paddingVertical: 10,
         paddingHorizontal: 10,
-        marginTop:55
+        marginTop: 55,
     },
     entryItem: {
-        flexDirection: 'row', // Alinha a data, preview e lixeira horizontalmente
-        justifyContent: 'space-between', // Separa os itens (texto à esquerda, lixeira à direita)
-        alignItems:'center',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
         padding: 10,
         borderBottomWidth: 1,
         borderColor: '#000000',
@@ -318,7 +310,6 @@ const styles = StyleSheet.create({
     },
     addButton: {
         backgroundColor: '#ffffff',
-        //padding: 15,
         borderRadius: 50,
         justifyContent: 'center',
         alignItems: 'center',
@@ -330,10 +321,16 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
     botoes: {
-        //position:'static',
         justifyContent: 'flex-end',
         alignItems: 'flex-end',
-        bottom: 30
-    }
-
+        bottom: 30,
+    },
+    lixeira: {
+        width: 24,
+        height: 24,
+        marginLeft: 15,
+    },
+    entryContent: {
+        flex: 1,
+    },
 });

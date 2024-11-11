@@ -170,7 +170,7 @@ export default Analystic;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#A7BED3',
+    backgroundColor: '#808f82',
   },
   Seta: {
     alignItems: 'center',
@@ -216,7 +216,7 @@ const styles = StyleSheet.create({
     margin: 5,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: '#5f7a93',
+    backgroundColor: '#808f82',
     borderRadius: 40,
     paddingLeft:5
   },
@@ -286,7 +286,7 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
   buttonClose: {
-    backgroundColor: '#2196F3',
+    backgroundColor: '#27361f',
   },
   textStyle: {
     color: 'white',
