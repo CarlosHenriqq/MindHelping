@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { StatusBar,View, Text, StyleSheet, Image, TextInput, KeyboardAvoidingView, ScrollView,TouchableOpacity } from 'react-native';
 import CheckBox from '@react-native-community/checkbox';
 import { useFocusEffect,useNavigation } from '@react-navigation/native';
+import LinearGradient from 'react-native-linear-gradient';
 
 export default function SignUp() {
   const [toggleCheck1, setToggleCheck1] = useState(false);
@@ -10,12 +11,17 @@ export default function SignUp() {
 
   useFocusEffect(
     React.useCallback(() => {
-      StatusBar.setBackgroundColor('#808F82');
+      
     }, [])
   );
 
 
   return (
+    <LinearGradient
+            colors={["#B8E4C9", "#A3D8F4"]}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 1 }}
+            style={styles.gradientBackground} >
     <KeyboardAvoidingView style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollViewContent}>
         <View style={styles.imageContainer}>
@@ -81,13 +87,17 @@ export default function SignUp() {
         </View>
       </ScrollView>
     </KeyboardAvoidingView>
+    </LinearGradient>
   );
 }
 
 const styles = StyleSheet.create({
+  gradientBackground:{
+    flex:1
+  },
   container: {
     flex: 1,
-    backgroundColor: '#808F82',
+    backgroundColor: 'transparent',
   },
   scrollViewContent: {
     flexGrow: 1,

@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     chatHeader: {
-        backgroundColor: '#9381FF',
+        backgroundColor: '#A3D8F4',
         height: 50,
         flexDirection: 'row',
         alignItems: 'center',
@@ -66,11 +66,12 @@ const styles = StyleSheet.create({
         marginTop: 10,
         marginBottom: 10,
         marginLeft: 20,
+        marginRight:10
     },
     textHeader: {
         marginHorizontal: 10,
         textAlign: 'center',
-        color: 'white',
+        color: '#000000',
         fontWeight: 'bold',
     },
     chatArea: {

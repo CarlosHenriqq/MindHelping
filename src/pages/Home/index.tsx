@@ -7,6 +7,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 
 
 const Home = () => {
+ 
   const [feelings] = useState([
     { text: "FELIZ", image: require('../../../assets/img/slide/feliz.png') },
     { text: "TRISTE", image: require('../../../assets/img/slide/triste.png') },
@@ -25,8 +26,10 @@ const Home = () => {
       const loadFeeling = async () => {
         const storedFeeling = await AsyncStorage.getItem('@selectedFeeling');
         setSelectedFeeling(storedFeeling || null);
+        StatusBar.setBackgroundColor('#B8E4C9');
     
       };
+       
 
       loadFeeling();
 
@@ -102,6 +105,7 @@ const Home = () => {
       console.log("Erro ao registrar o sentimento: ", e);
     }
   };
+  
   
   
 
@@ -357,7 +361,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around', // Para espaçar os cards
   },
   card: {
-    backgroundColor: '#A1B3A2',
+    backgroundColor: '#B8E4C9',
     width: '45%', // Cada card vai ocupar 45% da largura
     padding: 15,
     borderRadius: 10,
@@ -367,7 +371,7 @@ const styles = StyleSheet.create({
     
   },
   cardText:{
-    color:'white',
+    color:'black',
     alignItems:'flex-start',
     fontWeight:'bold', 
     paddingBottom:10

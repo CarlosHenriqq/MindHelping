@@ -26,7 +26,7 @@ const Psico = () => {
             setSearchText('');
             setState('');
             setHideInfo(false);
-            StatusBar.setBackgroundColor('#808F82')
+           
         }, []
        
             )

@@ -1,9 +1,17 @@
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useCallback } from 'react';
 import { View, StyleSheet, TextInput, KeyboardAvoidingView, Platform, ScrollView, Text, TouchableOpacity, FlatList, Image, StatusBar } from 'react-native';
+import LinearGradient from 'react-native-linear-gradient';
 
 const Diario = () => {
     const navigation = useNavigation();
+    useFocusEffect(
+        React.useCallback(() => {
+            StatusBar.setBackgroundColor('#B8E4C9');
+        }, [])
+    );
+        
+    
     // Referências para os TextInput
     const inputRefs = Array.from({ length: 13 }, () => useRef(null));
 
@@ -104,89 +112,91 @@ const Diario = () => {
         handleGoBack(); // Voltar para a tela de visualização
     };
 
-    useFocusEffect(
-        React.useCallback(() => {
-            StatusBar.setBackgroundColor('#808f82');
-        }, [])
-    );
-
+   
     return (
         <View style={styles.containerDiarioView}>
-            {isWriting ? (
-                <KeyboardAvoidingView
-                    style={styles.container}
-                    behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-                >
-                    <ScrollView contentContainerStyle={styles.scrollView}>
-                        <View style={styles.Seta}>
-                            <TouchableOpacity onPress={() => {
-                                saveEntry();
-                                handleGoBack();
-                            }} style={styles.botaoVoltar}>
-                                <Image
-                                    source={require('../../../assets/img/seta.png')}
-                                    style={styles.imagemSetaHeader}
-                                />
-                            </TouchableOpacity>
-                        </View>
-                        <Text style={styles.title}>MEU DIÁRIO</Text>
-                        <Text style={styles.currentPageText}>Página Atual: {currentPageIndex + 1}</Text>
-                        <View style={styles.containerDiario}>
-                            {inputRefs.map((ref, index) => (
-                                <TextInput
-                                    key={index}
-                                    ref={ref}
-                                    style={styles.diario}
-                                    maxLength={CHAR_LIMIT} // Limite de caracteres por campo
-                                    onChangeText={(text) => handleChangeText(text, index)}
-                                    value={pages[currentPageIndex][index]} // Valor controlado para a página atual
-                                />
-                            ))}
-                        </View>
-                        <View style={styles.buttonContainer}>
-                            <TouchableOpacity style={styles.botao} onPress={handlePreviousPage}>
-                                <Text style={styles.textBotao}>PÁGINA ANTERIOR</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity style={styles.botao} onPress={handleNextPage}>
-                                <Text style={styles.textBotao}>PRÓXIMA PÁGINA</Text>
-                            </TouchableOpacity>
-                        </View>
-                    </ScrollView>
-                </KeyboardAvoidingView>
-            ) : (
-                <View style={styles.entryListContainer}>
-                    <TouchableOpacity onPress={() => { navigation.navigate('Home'); }} style={styles.botaoVoltar}>
-                        <Image
-                            source={require('../../../assets/img/seta.png')}
-                            style={styles.imagemSetaHeader}
-                        />
-                    </TouchableOpacity>
-                    <Text style={styles.title}>Diário</Text>
-                    <View style={styles.listContainer}>
-                        <FlatList
-                            data={entries}
-                            keyExtractor={(item) => item.id}
-                            renderItem={({ item }) => (
-                                <View style={styles.entryItem}>
-                                    <View style={styles.entryContent}>
-                                        <Text style={styles.entryText}>{item.date}</Text>
-                                        <Text style={styles.previewText}>{item.preview}</Text>
-                                    </View>
-                                    <TouchableOpacity onPress={() => { /* função de deletar aqui */ }}>
-                                        <Image
-                                            source={require('../../../assets/img/lixeira.png')}
-                                            style={styles.lixeira}
-                                        />
-                                    </TouchableOpacity>
-                                </View>
-                            )}
-                        />
-                        <TouchableOpacity style={styles.addButton} onPress={handleNewEntry}>
-                            <Text style={styles.addButtonText}>+</Text>
+            
+                {isWriting ? (
+                    <KeyboardAvoidingView
+                        style={styles.container}
+                        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+                    >
+                        <ScrollView contentContainerStyle={styles.scrollView}>
+                            <View style={styles.Seta}>
+                                <TouchableOpacity onPress={() => {
+                                    saveEntry();
+                                    handleGoBack();
+                                }} style={styles.botaoVoltar}>
+                                    <Image
+                                        source={require('../../../assets/img/seta.png')}
+                                        style={styles.imagemSetaHeader}
+                                    />
+                                </TouchableOpacity>
+                            </View>
+
+
+                            <Text style={styles.headerTitle}>Diário</Text>
+
+
+
+                            <Text style={styles.currentPageText}>Página Atual: {currentPageIndex + 1}</Text>
+                            <View style={styles.containerDiario}>
+                                {inputRefs.map((ref, index) => (
+                                    <TextInput
+                                        key={index}
+                                        ref={ref}
+                                        style={styles.diario}
+                                        maxLength={CHAR_LIMIT} // Limite de caracteres por campo
+                                        onChangeText={(text) => handleChangeText(text, index)}
+                                        value={pages[currentPageIndex][index]} // Valor controlado para a página atual
+                                    />
+                                ))}
+                            </View>
+                            <View style={styles.buttonContainer}>
+                                <TouchableOpacity style={styles.botao} onPress={handlePreviousPage}>
+                                    <Text style={styles.textBotao}>PÁGINA ANTERIOR</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity style={styles.botao} onPress={handleNextPage}>
+                                    <Text style={styles.textBotao}>PRÓXIMA PÁGINA</Text>
+                                </TouchableOpacity>
+                            </View>
+                        </ScrollView>
+                    </KeyboardAvoidingView>
+                ) : (
+                    <View style={styles.entryListContainer}>
+                        <TouchableOpacity onPress={() => { navigation.navigate('Home'); }} style={styles.botaoVoltar}>
+                            <Image
+                                source={require('../../../assets/img/seta.png')}
+                                style={styles.imagemSetaHeader}
+                            />
                         </TouchableOpacity>
+                        <Text style={styles.title}>Diário</Text>
+                        <View style={styles.listContainer}>
+                            <FlatList
+                                data={entries}
+                                keyExtractor={(item) => item.id}
+                                renderItem={({ item }) => (
+                                    <View style={styles.entryItem}>
+                                        <View style={styles.entryContent}>
+                                            <Text style={styles.entryText}>{item.date}</Text>
+                                            <Text style={styles.previewText}>{item.preview}</Text>
+                                        </View>
+                                        <TouchableOpacity onPress={() => { /* função de deletar aqui */ }}>
+                                            <Image
+                                                source={require('../../../assets/img/lixeira.png')}
+                                                style={styles.lixeira}
+                                            />
+                                        </TouchableOpacity>
+                                    </View>
+                                )}
+                            />
+                            <TouchableOpacity style={styles.addButton} onPress={handleNewEntry}>
+                                <Text style={styles.addButtonText}>+</Text>
+                            </TouchableOpacity>
+                        </View>
                     </View>
-                </View>
-            )}
+                )}
+           
         </View>
     );
 };
@@ -197,6 +207,23 @@ export default Diario;
 
 
 const styles = StyleSheet.create({
+    gradientBackground: {
+        flex: 1
+    },
+    headerContainer: {
+        height: 100, // Ajuste conforme necessário para ocupar a área verde
+        backgroundColor: '#B8E4C9', // Caso queira usar apenas uma cor sólida
+        justifyContent: "center",
+        alignItems: "center",
+        borderBottomLeftRadius: 15,
+        borderBottomRightRadius: 15,
+    },
+    headerTitle: {
+        fontSize: 20,
+        fontWeight: "bold",
+        color: "#ffffff", // Cor do texto no cabeçalho
+    },
+
     containerDiarioView: {
         flex: 1,
     },
@@ -236,7 +263,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         fontSize: 24,
         textAlign: 'center',
-        color: '#ffffff',
+        color: '#000000',
         top: 20,
     },
     containerDiario: {
@@ -278,7 +305,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 0,
         paddingVertical: 0,
         padding: 16,
-        backgroundColor: '#808f82',
+        backgroundColor: '#B8E4C9',
     },
     listContainer: {
         backgroundColor: '#f0f0f0',

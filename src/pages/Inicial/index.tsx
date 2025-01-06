@@ -3,16 +3,23 @@ import { useFocusEffect,useNavigation } from "@react-navigation/native";
 import React from "react";
 import { KeyboardAvoidingView, StatusBar, StyleSheet, Text, TouchableOpacity } from "react-native";
 import * as Animatable from 'react-native-animatable';
+import LinearGradient from "react-native-linear-gradient";
 
 const Inicial = () => {
     const navigator = useNavigation();
-    useFocusEffect(
-        React.useCallback(() => {
-          StatusBar.setBackgroundColor('#808f82');
-        }, [])
-      );
+   useFocusEffect(
+             React.useCallback(() => {
+               StatusBar.setBackgroundColor('#B8E4C9');
+             }, [])
+           );
 
     return (
+        <LinearGradient
+        colors={["#B8E4C9", "#A3D8F4"]}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 1 }}
+        style={styles.gradientBackground} >
+    
         <KeyboardAvoidingView style={styles.principal} behavior="padding">
             <Animatable.Image
                 animation="flipInY" duration={1000}
@@ -29,11 +36,15 @@ const Inicial = () => {
                 </TouchableOpacity>
             </Animatable.View>
         </KeyboardAvoidingView>
+        </LinearGradient>
     )
 }
 const styles = StyleSheet.create({
+    gradientBackground:{
+        flex:1
+    },
     principal: {
-        backgroundColor: "#808f82",
+        backgroundColor: 'transparent',
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
@@ -68,7 +79,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowOffset: { width: 0, height: 2 },
     elevation: 5,
-    borderWidth:1
+    borderWidth:0.5
        
 
     },
@@ -76,7 +87,7 @@ const styles = StyleSheet.create({
         borderRadius: 15,
        backgroundColor:'#EDEDED',
         height: 40,
-        width: 200,
+        width: 270,
         alignItems: 'center',
         justifyContent: 'center',
         marginVertical: 10,
@@ -85,7 +96,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowOffset: { width: 0, height: 2 },
     elevation: 5,
-    borderWidth:1
+    borderWidth:0.5
        
 
     },

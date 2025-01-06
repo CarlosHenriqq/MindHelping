@@ -2,6 +2,7 @@ import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { View, Text, StyleSheet, TextInput, KeyboardAvoidingView, TouchableOpacity, StatusBar } from 'react-native';
 import * as Animatable from 'react-native-animatable';
+import LinearGradient from 'react-native-linear-gradient';
 
 const Login = () => {
     const navigation = useNavigation();
@@ -11,6 +12,11 @@ const Login = () => {
     };
 
     return (
+         <LinearGradient
+                colors={["#B8E4C9", "#A3D8F4"]}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 1 }}
+                style={styles.gradientBackground} >
         <KeyboardAvoidingView style={styles.principal} behavior="padding">
             <Animatable.Image
                 animation="zoomIn"
@@ -43,12 +49,17 @@ const Login = () => {
                 </Animatable.View>
             </Animatable.View>
         </KeyboardAvoidingView>
+        </LinearGradient>
     );
 };
 
 const styles = StyleSheet.create({
+    gradientBackground:{
+        flex:1
+    },
+
     principal: {
-        backgroundColor: "#808f82",
+        backgroundColor: "transparent",
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
@@ -71,7 +82,7 @@ const styles = StyleSheet.create({
     input: {
         height: 45,
         borderRadius: 8,
-        borderColor: '#ccc',
+        borderColor: '#000000',
         width: '80%',
         paddingHorizontal: 15,
         borderWidth: 1,
@@ -108,7 +119,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         marginVertical: 10,
-        borderColor: '#ccc',
+        borderColor: '#000000',
         borderWidth: 1,
     },
     buttonText: {

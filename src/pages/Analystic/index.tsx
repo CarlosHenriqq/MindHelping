@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { Text, View, StyleSheet, TouchableOpacity, Modal, Dimensions, Image } from 'react-native';
+import { Text, View, StyleSheet, TouchableOpacity, Modal, Dimensions, Image, StatusBar } from 'react-native';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { BarChart } from 'react-native-chart-kit'; // Usando BarChart para gráfico de barras
+import LinearGradient from "react-native-linear-gradient";
 
 const Analystic = () => {
   const navigation = useNavigation();
@@ -36,7 +37,13 @@ const Analystic = () => {
       };
       getDailyFeelings();
     }, [])
+    
   );
+  useFocusEffect(
+          React.useCallback(() => {
+            StatusBar.setBackgroundColor('#A3D8F4');
+          }, [])
+        );
 
   const handleDayPress = (day) => {
     setSelectedDay(day);
@@ -75,6 +82,12 @@ const Analystic = () => {
 
   return (
     <View style={styles.container}>
+      <LinearGradient
+            colors={["#A3D8F4", "#C9B6E4"]}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 1 }}
+            style={styles.gradientBackground} 
+        >
       <View style={styles.Seta}>
         <TouchableOpacity onPress={() => navigation.navigate('Home')} style={styles.botaoVoltar}>
         <Image
@@ -161,6 +174,7 @@ const Analystic = () => {
           </TouchableOpacity>
         </View>
       </Modal>
+      </LinearGradient>
     </View>
   );
 };
@@ -168,9 +182,12 @@ const Analystic = () => {
 export default Analystic;
 
 const styles = StyleSheet.create({
+  gradientBackground:{
+    flex:1
+  },
   container: {
     flex: 1,
-    backgroundColor: '#808f82',
+    backgroundColor: 'transparent',
   },
   Seta: {
     alignItems: 'center',
