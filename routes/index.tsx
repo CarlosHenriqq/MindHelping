@@ -1,7 +1,7 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
-import { Phone, Book, MessageCircle, Users, ChartPie } from 'lucide-react-native'; // Import icons from Lucide
+import { Phone, Book, Users, ChartPie, Goal } from 'lucide-react-native'; // Import icons from Lucide
 import Home from '../src/pages/Home';
 import Perfil from '../src/pages/Perfil';
 import Inicial from '../src/pages/Inicial';
@@ -9,7 +9,7 @@ import Login from '../src/pages/Login';
 import SignUp from '../src/pages/SignUp';
 import Call from '../src/pages/Call';
 import Diario from '../src/pages/Diario';
-import Chat from '../src/pages/Chat';
+import Metas from '../src/pages/Metas';
 import Psico from '../src/pages/Psicologo';
 import Analystic from '../src/pages/Analystic';
 
@@ -34,8 +34,8 @@ const TabNavigation = () => (
           case 'Análise':
             IconComponent = ChartPie;
             break;
-          case 'Chat':
-            IconComponent = MessageCircle; // Ícone de chat
+          case 'Metas':
+            IconComponent = Goal; // Ícone de chat
             break;
           case 'Profissionais':
             IconComponent = Users; // Ícone de profissionais (grupo de pessoas)
@@ -60,7 +60,7 @@ const TabNavigation = () => (
     <Tabs.Screen name="CVV" component={Call} options={{ tabBarLabel: () => null }} />
     <Tabs.Screen name="Diario" component={Diario} options={{ tabBarLabel: () => null }} />
     <Tabs.Screen name='Análise' component={Analystic} options={{ tabBarLabel: () => null }} />
-    <Tabs.Screen name="Chat" component={Chat} options={{ tabBarLabel: () => null }} />
+    <Tabs.Screen name="Metas" component={Metas} options={{ tabBarLabel: () => null }} />
     <Tabs.Screen name="Profissionais" component={Psico} options={{ tabBarLabel: () => null }} />
   </Tabs.Navigator>
 );

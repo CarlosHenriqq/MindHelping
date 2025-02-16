@@ -1,9 +1,9 @@
 import React, { useState, useCallback } from 'react';
-import { Text, View, StyleSheet, StatusBar, Image, TouchableOpacity } from 'react-native';
+import { Text, View, StyleSheet, StatusBar, Image, TouchableOpacity, Modal } from 'react-native';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import Swiper from 'react-native-swiper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { ScrollView } from 'react-native-gesture-handler';
+import { ScrollView, TextInput } from 'react-native-gesture-handler';
 
 
 const Home = () => {
@@ -16,7 +16,9 @@ const Home = () => {
     { text: "TEDIO", image: require('../../../assets/img/slide/tedio.png') },
     { text: "NEUTRO", image: require('../../../assets/img/slide/indeciso.png') },
   ]);
-
+  const [modalSelected, setModalSelect] = useState(false);
+  const[inputText, setInputText] = useState('');
+  const[textosSalvos, setTextosSalvos] = useState('');
   const [selectedFeeling, setSelectedFeeling] = useState();
   const [selectedFeelingIndex, setSelectedFeelingIndex] = useState(true);
   const navigation = useNavigation();
@@ -36,39 +38,7 @@ const Home = () => {
       ;
     }, [])
   );
-  /*const incrementFeelingCount = async (feeling) => {
-    try {
-      const storedCounts = await AsyncStorage.getItem('@feelingCounts');
-      const counts = storedCounts ? JSON.parse(storedCounts) : { feliz: 0, triste: 0, raiva: 0, ansioso: 0, tedio: 0, neutro: 0 };
   
-      switch(feeling.toLowerCase()) {
-        case 'feliz':
-          counts.feliz += 1;
-          break;
-        case 'triste':
-          counts.triste += 1;
-          break;
-        case 'raiva':
-          counts.com_raiva += 1;
-          break;
-        case 'ansioso':
-          counts.ansioso += 1;
-          break;
-        case 'tedio':
-          counts.tedio += 1;
-          break;
-        case 'neutro':
-          counts.neutro += 1;
-          break;
-        default:
-          break;
-      }
-  
-      await AsyncStorage.setItem('@feelingCounts', JSON.stringify(counts));
-    } catch (e) {
-      console.log("Erro ao incrementar a contagem de sentimento: ", e);
-    }
-  };*/
   
   const handlePress = async (feeling) => {
     setSelectedFeeling(feeling);
@@ -105,8 +75,19 @@ const Home = () => {
       console.log("Erro ao registrar o sentimento: ", e);
     }
   };
-  
-  
+   const modalSelecionado = () =>{
+      setModalSelect(true)
+      
+   }
+   const salvarTexto = () => {
+    if (inputText.trim()) {
+      setTextosSalvos([...textosSalvos, inputText]);
+      setInputText('');
+      setModalSelect(false);[
+        console.log(textosSalvos)
+      ]
+    }
+  };
   
 
   
@@ -140,13 +121,37 @@ const Home = () => {
             <TouchableOpacity onPress={() =>{ 
               registerFeelingWithTime(item.text)
                handlePress(item.text)
+               modalSelecionado()
                }}>
               <Image source={item.image} style={styles.img} />
             </TouchableOpacity>
           </View>
         ))}
       </Swiper>
-    
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalSelected}
+        onRequestClose={() => setModalSelect(false)}
+      >
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            <Text style={styles.modalTitle}>Porquê você está se sentindo assim?</Text>
+            <TextInput
+              style={styles.input}
+              placeholder="Digite aqui"
+              value={inputText}
+              onChangeText={setInputText}
+            />
+            <TouchableOpacity
+              style={styles.modalButton}
+              onPress={salvarTexto}
+            >
+              <Text style={styles.modalButtonText}>Salvar</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
       <View style={styles.nextConsulta}>
         <Text style={styles.textConsulta}>Sua próxima consulta: </Text>
         <View style={styles.cardConsulta}>
@@ -395,8 +400,44 @@ const styles = StyleSheet.create({
   continueText: {
     color: 'white',
     fontSize: 16,
+    fontWeight: 'bold'
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)', // Fundo escurecido
+  },
+  modalContent: {
+    width: '80%',
+    padding: 20,
+    backgroundColor: '#fff',
+    borderRadius: 10,
+    alignItems: 'center',
+  },
+  modalTitle: {
+    fontSize: 16,
     fontWeight: 'bold',
-
-
+    marginBottom: 15,
+  },
+  input: {
+    width: '100%',
+    padding: 10,
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 5,
+    marginBottom: 15,
+  },
+  modalButton: {
+    backgroundColor: '#2980B9',
+    padding: 10,
+    borderRadius: 5,
+    width: '100%',
+    alignItems: 'center',
+  },
+  modalButtonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: 'bold',
   },
 });
