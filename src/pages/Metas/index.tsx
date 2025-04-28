@@ -1,19 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react'; 
 import { View, StyleSheet, Text, TouchableOpacity, Modal, TextInput, Image } from 'react-native';
 import Svg, { Circle, G } from 'react-native-svg';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ScrollView } from 'react-native-gesture-handler';
+import { Trash2 } from 'lucide-react-native';
+
+
 
 const Metas = () => {
-  // Estado para controlar o progresso de cada meta
   const [metas, setMetas] = useState([]);
-
-  // Estado para o modal e campos de nova meta
   const [modalVisible, setModalVisible] = useState(false);
   const [novaMetaText, setNovaMetaText] = useState('');
   const [numeroDias, setNumeroDias] = useState(30);
 
-  // Carrega as metas salvas ao iniciar o app
   useEffect(() => {
     const loadMetas = async () => {
       const savedMetas = await AsyncStorage.getItem('@metas');
@@ -24,7 +23,6 @@ const Metas = () => {
     loadMetas();
   }, []);
 
-  // Salva as metas no AsyncStorage sempre que o array de metas for atualizado
   useEffect(() => {
     const saveMetas = async () => {
       await AsyncStorage.setItem('@metas', JSON.stringify(metas));
@@ -32,13 +30,13 @@ const Metas = () => {
     saveMetas();
   }, [metas]);
 
-  // Verifica se o usuário já interagiu com cada meta hoje
   const checkIfClickedToday = async () => {
     const today = new Date().toISOString().split('T')[0]; // Formato YYYY-MM-DD
 
     const updatedMetas = await Promise.all(
       metas.map(async (meta) => {
         const lastClickDate = await AsyncStorage.getItem(`@lastClickDate_${meta.id}`);
+
         if (lastClickDate === today) {
           return { ...meta, disabled: true }; // Desabilita o botão se já clicou hoje
         }
@@ -49,121 +47,111 @@ const Metas = () => {
     setMetas(updatedMetas);
   };
 
-  // Atualiza o progresso e salva a data do clique
   const handlePress = async (metaId) => {
     const today = new Date().toISOString().split('T')[0];
-
-    // Atualiza o estado da meta
+  
     const updatedMetas = metas.map((meta) => {
       if (meta.id === metaId) {
-        const newDaysCompleted = meta.daysCompleted + 1; // Incrementa o contador de dias
-        return { ...meta, daysCompleted: newDaysCompleted, disabled: true }; // Desabilita o botão
+        const newDaysCompleted = meta.daysCompleted + 1;
+        return { ...meta, daysCompleted: newDaysCompleted, disabled: true };
       }
       return meta;
     });
+  
     setMetas(updatedMetas);
-
-    // Salva a data do clique e o número de dias completos no AsyncStorage
+  
     await AsyncStorage.setItem(`@lastClickDate_${metaId}`, today);
-    await AsyncStorage.setItem(`@daysCompleted_${metaId}`, updatedMetas.find((meta) => meta.id === metaId).daysCompleted.toString());
+    await AsyncStorage.setItem(`@daysCompleted_${metaId}`, updatedMetas.find(meta => meta.id === metaId).daysCompleted.toString());
   };
-
-  // Carrega os dias completos ao iniciar a tela
+  
   const loadDaysCompleted = async () => {
     const updatedMetas = await Promise.all(
       metas.map(async (meta) => {
         const daysCompleted = await AsyncStorage.getItem(`@daysCompleted_${meta.id}`);
-        return { ...meta, daysCompleted: daysCompleted ? parseInt(daysCompleted) : 0 };
+        return { ...meta, daysCompleted: daysCompleted ? parseInt(daysCompleted, 10) : 0 };
       })
     );
     setMetas(updatedMetas);
   };
 
-  // Verifica os cliques e carrega os dias completos ao carregar a tela
   useEffect(() => {
     checkIfClickedToday();
     loadDaysCompleted();
   }, []);
 
-  // Função para excluir uma meta
   const excluirMeta = (metaId) => {
-    const updatedMetas = metas.filter((meta) => meta.id !== metaId); // Remove a meta do array
-    setMetas(updatedMetas); // Atualiza o estado
+    const updatedMetas = metas.filter((meta) => meta.id !== metaId);
+    setMetas(updatedMetas);
   };
 
   return (
-    <ScrollView
-      contentContainerStyle={styles.container} // Aplica o estilo ao conteúdo do ScrollView
-    >
-      <View style={styles.textMetas}>
-        <Text style={styles.text}>Minhas Metas</Text>
-      </View>
-      <View style={styles.cardsMeta}>
-        {metas.map((meta) => {
-          const progress = (meta.daysCompleted / meta.totalDias) * 100; // Calcula o progresso com base nos dias personalizados
+    <View style={styles.mainContainer}>
+      <ScrollView contentContainerStyle={styles.container}>
+        <View style={styles.textMetas}>
+          <Text style={styles.text}>Minhas Metas</Text>
+        </View>
+        <View style={styles.cardsMeta}>
+          {metas.map((meta) => {
+            const progress = (meta.daysCompleted / meta.totalDias) * 100;
 
-          return (
-            <View key={meta.id} style={styles.cardContainer}>
-              <TouchableOpacity
-                style={[styles.cards, meta.disabled && styles.disabledCard]} // Aplica estilo de desabilitado
-                onPress={() => handlePress(meta.id)}
-                disabled={meta.disabled}
-              >
-                <Text style={styles.textCard}>{meta.text}</Text>
-                <View style={styles.chartContainer}>
-                  <Svg width="40" height="40">
-                    <G rotation="-90" origin="20, 20">
-                      <Circle
-                        cx="20"
-                        cy="20"
-                        r="15"
-                        stroke="#CCCCCC" // Cor de fundo do círculo
-                        strokeWidth="4"
-                        fill="transparent"
-                      />
-                      <Circle
-                        cx="20"
-                        cy="20"
-                        r="15"
-                        stroke="#00FF00" // Cor do progresso
-                        strokeWidth="4"
-                        strokeDasharray={2 * Math.PI * 15}
-                        strokeDashoffset={(2 * Math.PI * 15) - ((2 * Math.PI * 15 * progress) / 100)}
-                        fill="transparent"
-                      />
-                    </G>
-                  </Svg>
-                  <Text style={styles.daysText}>{meta.daysCompleted}/{meta.totalDias}</Text>
-                </View>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.lixeiraContainer}
-                onPress={() => excluirMeta(meta.id)} // Exclui a meta ao clicar no ícone
-              >
-                <Image
-                  source={require('../../../assets/img/lixeira.png')} // Caminho do ícone de lixeira
-                  style={styles.lixeiraIcon}
-                />
-              </TouchableOpacity>
-            </View>
-          );
-        })}
-      </View>
-      <View>
-        <TouchableOpacity
-          style={styles.newMetaContainer}
-          onPress={() => setModalVisible(true)} // Abre o modal
-        >
-          <Text style={{ color: 'black', fontWeight: 'bold', fontSize: 15 }}>Adicionar nova meta</Text>
-        </TouchableOpacity>
-      </View>
+            return (
+              <View key={meta.id} style={styles.cardContainer}>
+                <TouchableOpacity
+                  style={[styles.cards, meta.disabled && styles.disabledCard]}
+                  onPress={() => handlePress(meta.id)}
+                  disabled={meta.disabled}
+                >
+                  <Text style={styles.textCard}>{meta.text}</Text>
+                  <View style={styles.chartContainer}>
+                    <Svg width="40" height="40">
+                      <G rotation="-90" origin="20, 20">
+                        <Circle
+                          cx="20"
+                          cy="20"
+                          r="15"
+                          stroke="#CCCCCC"
+                          strokeWidth="4"
+                          fill="transparent"
+                        />
+                        <Circle
+                          cx="20"
+                          cy="20"
+                          r="15"
+                          stroke="#00FF00"
+                          strokeWidth="4"
+                          strokeDasharray={2 * Math.PI * 15}
+                          strokeDashoffset={(2 * Math.PI * 15) - ((2 * Math.PI * 15 * progress) / 100)}
+                          fill="transparent"
+                        />
+                      </G>
+                    </Svg>
+                    <Text style={styles.daysText}>{meta.daysCompleted}/{meta.totalDias}</Text>
+                  </View>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.lixeiraContainer}
+                  onPress={() => excluirMeta(meta.id)}
+                >
+                <Trash2 color="red" size={28} style={{left:15, top:15}}/>
+                </TouchableOpacity>
+              </View>
+            );
+          })}
+        </View>
+      </ScrollView>
 
-      {/* Modal para adicionar nova meta */}
+      <TouchableOpacity
+        style={styles.newMetaContainer}
+        onPress={() => setModalVisible(true)}
+      >
+        <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 35 }}>+</Text>
+      </TouchableOpacity>
+
       <Modal
         animationType="slide"
         transparent={true}
         visible={modalVisible}
-        onRequestClose={() => setModalVisible(false)} // Fecha o modal ao pressionar o botão de voltar (Android)
+        onRequestClose={() => setModalVisible(false)}
       >
         <View style={styles.modalContainer}>
           <View style={styles.modalContent}>
@@ -188,18 +176,17 @@ const Metas = () => {
                   alert('Por favor, preencha os campos corretamente.');
                   return;
                 }
-                // Adiciona a nova meta
                 const novaMeta = {
                   id: metas.length + 1,
                   text: novaMetaText,
                   daysCompleted: 0,
                   disabled: false,
-                  totalDias: numeroDias, // Adiciona o número de dias personalizado
+                  totalDias: numeroDias,
                 };
                 setMetas([...metas, novaMeta]);
-                setModalVisible(false); // Fecha o modal
-                setNovaMetaText(''); // Limpa o campo de texto
-                setNumeroDias(30); // Reseta o número de dias para o valor padrão
+                setModalVisible(false);
+                setNovaMetaText('');
+                setNumeroDias(30);
               }}
             >
               <Text style={styles.modalButtonText}>Adicionar</Text>
@@ -213,13 +200,17 @@ const Metas = () => {
           </View>
         </View>
       </Modal>
-    </ScrollView>
+    </View>
   );
 };
 
 export default Metas;
 
 const styles = StyleSheet.create({
+  mainContainer: {
+    flex: 1,
+    position: 'relative', // Permitirá o botão flutuar no final da tela
+  },
   container: {
     alignItems: 'center',
     justifyContent: 'flex-start',
@@ -250,9 +241,9 @@ const styles = StyleSheet.create({
     height: 80,
     borderRadius: 15,
     alignItems: 'center',
-    justifyContent: 'space-between', // Alinha o texto e o gráfico
+    justifyContent: 'space-between',
     padding: 16,
-    flexDirection: 'row', // Organiza o conteúdo em linha
+    flexDirection: 'row',
     shadowColor: '#000000',
     shadowRadius: 10,
     shadowOpacity: 0.25,
@@ -260,7 +251,7 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   disabledCard: {
-    opacity: 0.5, // Reduz a opacidade do botão desabilitado
+    opacity: 0.5,
   },
   textCard: {
     fontSize: 16,
@@ -274,32 +265,39 @@ const styles = StyleSheet.create({
   },
   daysText: {
     fontSize: 12,
-    fontWeight: 'bold',
-    marginTop: 4,
+    fontWeight: '600',
+    marginTop: 5,
   },
   lixeiraContainer: {
-    width: '5%',
-    alignItems: 'center',
-    justifyContent: 'center',
+    position: 'absolute',
+    top: 10,
+    right: 10,
   },
   lixeiraIcon: {
-    width: 20,
-    height: 20,
+    width: 24,
+    height: 24,
   },
   newMetaContainer: {
-    width: 385,
-    height: 40,
-    borderWidth: 0.5,
-    borderRadius: 15,
-    justifyContent: 'center',
+    position: 'absolute',
+    bottom: 20,
+    right: 20,
+    backgroundColor: '#2980B9',
+    width: 60,
+    height: 60,
+    borderRadius: 50,
     alignItems: 'center',
-    margin: 20,
+    justifyContent: 'center',
+    shadowColor: '#000',
+    shadowOpacity: 0.3,
+    shadowRadius: 10,
+    shadowOffset: { width: 2, height: 2 },
+    elevation: 5,
   },
   modalContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)', // Fundo escurecido
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
   modalContent: {
     width: '80%',
