@@ -1,179 +1,326 @@
 import React, { useState } from 'react';
-import { StatusBar,View, Text, StyleSheet, Image, TextInput, KeyboardAvoidingView, ScrollView,TouchableOpacity } from 'react-native';
-import CheckBox from '@react-native-community/checkbox';
-import { useFocusEffect,useNavigation } from '@react-navigation/native';
-import LinearGradient from 'react-native-linear-gradient';
+import {
+  StatusBar,
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  TextInput,
+  KeyboardAvoidingView,
+  ScrollView,
+  ImageBackground,
+  Platform
+} from 'react-native';
+import { User, Mail, Lock, Calendar, Phone, MapPin, IdCard, MapPinHouse, Binary, Building2 } from 'lucide-react-native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 export default function SignUp() {
-  const [toggleCheck1, setToggleCheck1] = useState(false);
-  const [toggleCheck2, setToggleCheck2] = useState(false)
-  const navigation = useNavigation()
+  const navigation = useNavigation();
+  const goLogin = () => {
+    navigation.navigate('Login');
+  };
 
+  const [birthDate, setBirthDate] = useState('');
+  const [cep, setCep] = useState('');
+  const [endereco, setEndereco] = useState('');
+  const [bairro, setBairro] = useState('');
+  const [cidade, setCidade] = useState('');
+  const [uf, setUf] = useState('');
+
+  const inputFields = [
+    { placeholder: 'Nome', key: 'name', icon: <User color="#3386BC" size={20} />, fullWidth: true },
+    {
+      placeholder: 'Data de nascimento', key: 'birthDate', keyboardType: 'numeric',
+      format: 'date', icon: <Calendar color="#3386BC" size={20} />,
+      maxLength: 10,
+      onChange: (text) => {
+        let cleanedText = text.replace(/\D/g, '');
+        if (cleanedText.length > 4) {
+          cleanedText = `${cleanedText.slice(0, 2)}/${cleanedText.slice(2, 4)}/${cleanedText.slice(4, 8)}`;
+        } else if (cleanedText.length > 2) {
+          cleanedText = `${cleanedText.slice(0, 2)}/${cleanedText.slice(2)}`;
+        }
+        setBirthDate(cleanedText);
+      }
+    },
+    { placeholder: 'CPF', key: 'cpf', icon: <IdCard color="#3386BC" size={20} />, keyboardType: 'numeric' },
+    { placeholder: 'Identidade de gênero', key: 'gender', icon: <User color="#3386BC" size={20} />, fullWidth: true },
+    { placeholder: 'Telefone', key: 'phone', icon: <Phone color="#3386BC" size={20} />, keyboardType: 'numeric', fullWidth: true },
+    { placeholder: 'Endereço de e-mail', key: 'email', icon: <Mail color="#3386BC" size={20} />, fullWidth: true },
+    { placeholder: 'Senha', key: 'password', icon: <Lock color="#3386BC" size={20} />, secure: true, fullWidth: true },
+    { placeholder: 'Repita a senha', key: 'confirmPassword', icon: <Lock color="#3386BC" size={20} />, secure: true, fullWidth: true },
+    {
+      placeholder: 'CEP', key: 'zipCode', icon: <MapPin color="#3386BC" size={20} />, keyboardType: 'numeric',
+      onChange: (text) => {
+        setCep(text);
+        if (text.length === 8) chamarCep(text);
+      }
+    },
+    {
+      key: 'row2',
+      fields: [
+        { placeholder: 'Endereço', key: 'address', icon: <MapPinHouse color="#3386BC" size={20} />, flex: 1.5 },
+        { placeholder: 'Nº', key: 'addressNumber', icon: <Binary color="#3386BC" size={20} />, keyboardType: 'numeric',  flex:0.5 }
+      ]
+    },
+    { placeholder: 'Complemento', key: 'complement', icon: <MapPin color="#3386BC" size={20} />, fullWidth: true },
+    { placeholder: 'Bairro', key: 'neighborhood', icon: <MapPin color="#3386BC" size={20} />, flex: 2 },
+    {
+      key: 'row3',
+      fields: [
+        { placeholder: 'Cidade', key: 'city', icon: <Building2 color="#3386BC" size={20} />, flex: 1.5 },
+        { placeholder: 'UF', key: 'state', icon: <MapPin color="#3386BC" size={20} />, flex: 0.5 }
+      ]
+    }
+  ];
+  
+  async function chamarCep(cep) {
+    try {
+      const url = `https://viacep.com.br/ws/${cep}/json/`;
+      const req = await fetch(url);
+      const data = await req.json();
+  
+      if (!data.erro) {
+        setEndereco(data.logradouro);
+        setBairro(data.bairro);
+        setCidade(data.localidade);
+        setUf(data.uf);
+        console.log(data)
+        
+
+      } else {
+        console.log("CEP não encontrado");
+      }
+    } catch (error) {
+      console.log("Erro ao buscar o CEP: " + error);
+      console.log(cep)
+    }
+  }
   useFocusEffect(
     React.useCallback(() => {
-      
+      StatusBar.setTranslucent(true);
+      StatusBar.setBackgroundColor('transparent');
     }, [])
   );
 
-
   return (
-    <LinearGradient
-            colors={["#B8E4C9", "#A3D8F4"]}
-            start={{ x: 0, y: 0 }}
-            end={{ x: 1, y: 1 }}
-            style={styles.gradientBackground} >
-    <KeyboardAvoidingView style={styles.container}>
-      <ScrollView contentContainerStyle={styles.scrollViewContent}>
-        <View style={styles.imageContainer}>
-          <Image source={require('../../../assets/img/logo.png')} style={styles.imagem} />
+    <ImageBackground
+      source={require('../../../assets/img/gradiente.png')}
+      style={styles.gradientBackground}
+      blurRadius={20}
+    >
+      <KeyboardAvoidingView
+        style={styles.container}
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      >
+        <View style={styles.header}>
+          <Image
+            source={require('../../../assets/img/nome_app.png')}
+            style={styles.imagemNome}
+            resizeMode='contain'
+          />
+          <Image
+            source={require('../../../assets/img/logo.png')}
+            style={styles.imagem}
+            resizeMode='contain'
+          />
+          <Text style={styles.title}>INSCREVA-SE</Text>
+          <Text style={styles.subtitle}>Crie sua conta!</Text>
         </View>
 
-        <View style={styles.register}>
-          <Text style={styles.textoI}>NOME</Text>
+        <ScrollView
+          contentContainerStyle={styles.scrollContent}
+          showsVerticalScrollIndicator={false}
+        >
+          {inputFields.map((field) => (
+  field.fields ? (
+    <View key={field.key} style={styles.rowContainer}>
+      {field.fields.map((subField) => (
+        <View key={subField.key} style={[styles.inputWrapper, { flex: subField.flex || 1, marginHorizontal: 4 }]}>
+          <View style={styles.iconContainer}>{subField.icon}</View>
           <TextInput
-            placeholder='Digite seu nome'
+            placeholder={subField.placeholder}
+            placeholderTextColor="#3386BC"
             style={styles.input}
-            placeholderTextColor={'#000000'}
+            value={
+              subField.key === 'address' ? endereco :
+              
+              subField.key === 'city' ? cidade :
+              subField.key === 'state' ? uf :
+              subField.key === 'zipCode' ? cep :
+              undefined
+            }
+            onChangeText={(text) => {
+              switch (subField.key) {
+                case 'address': return setEndereco(text);
+                case 'neighborhood': return setBairro(text);
+                case 'city': return setCidade(text);
+                case 'state': return setUf(text);
+                case 'zipCode':
+                  setCep(text);
+                  if (text.length === 8) chamarCep(text);
+                  return;
+              }
+            }}
+            keyboardType={subField.keyboardType}
+            maxLength={subField.maxLength}
+            secureTextEntry={subField.secure || false}
           />
-          <Text style={styles.textoI}>EMAIL</Text>
-          <TextInput
-            placeholder='Digite seu e-mail'
-            style={styles.input}
-            placeholderTextColor={'#000000'}
-          />
-          <Text style={styles.textoI}>REPITA O E-MAIL</Text>
-          <TextInput
-            placeholder='Repita seu e-mail'
-            style={styles.input}
-            placeholderTextColor={'#000000'}
-          />
-          <Text style={styles.textoI}>SENHA (MIN 4 CARACTÉRES)</Text>
-          <TextInput
-            placeholder='Crie uma senha'
-            style={styles.input}
-            secureTextEntry={true}
-            placeholderTextColor={'#000000'}
-          />
-          <Text style={styles.textoI}>REPITA A SENHA</Text>
-          <TextInput
-            placeholder='Repita a senha'
-            style={styles.input}
-            secureTextEntry={true}
-            placeholderTextColor={'#000000'}
-          />
-          <View style={styles.checkContainer}>
-            <CheckBox
-              disabled={false}
-              value={toggleCheck1}
-              onValueChange={(newValue) => setToggleCheck1(newValue)}
-              style={styles.check}
-              tintColors={{ true: '#808F82', false: '#000000' }}
-            />
-            <Text style={styles.title}>Aceito os termos e condições</Text>
-          </View>
-          <View style={styles.checkContainer}>
-            <CheckBox
-              disabled={false}
-              value={toggleCheck2}
-              onValueChange={(newValue) => setToggleCheck2(newValue)}
-              style={styles.check}
-              tintColors={{ true: '#808F82', false: '#000000' }}
-            />
-            <Text style={styles.title}>Autorizo o envio de notificações</Text>
-          </View>
-          <TouchableOpacity style={styles.button} onPress={()=> navigation.navigate('TabNavigation')}>
-                    <Text style={styles.buttonText}>REGISTRAR</Text> 
-                </TouchableOpacity>
         </View>
-      </ScrollView>
-    </KeyboardAvoidingView>
-    </LinearGradient>
+      ))}
+    </View>
+  ) : (
+    <View key={field.key} style={[styles.inputWrapper, { width: '85%' }]}>
+      <View style={styles.iconContainer}>{field.icon}</View>
+      <TextInput
+        placeholder={field.placeholder}
+        placeholderTextColor="#3386BC"
+        style={styles.input}
+        value={
+          field.key === 'birthDate' ? birthDate :
+          field.key === 'zipCode' ? cep :
+          subField.key === 'neighborhood' ? bairro :
+          undefined
+        }
+        onChangeText={field.onChange || undefined}
+        keyboardType={field.keyboardType}
+        maxLength={field.maxLength}
+        secureTextEntry={field.secure || false}
+      />
+    </View>
+  )
+))}
+
+          <View style={{ top: 30 }}>
+            <Text style={{ textAlign: 'center', color: 'white', fontSize: 11, bottom: 15 }}>Se registrando, você concorda com os nossos</Text>
+            <TouchableOpacity>
+              <Text style={{
+                textAlign: 'center', color: 'white', fontSize: 11, bottom: 15, textDecorationLine: 'underline',
+                textShadowColor: 'rgba(255, 255, 255, 0.5)',
+                textShadowOffset: { width: 1, height: 1 },
+                textShadowRadius: 3,
+              }}>Termos de uso e a Politica de privacidade.</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.textButtonContainer}>
+            <TouchableOpacity style={styles.button} onPress={goLogin}>
+              <Text style={styles.buttonText}>Inscreva-se</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={{ top: 30, flexDirection: 'row', justifyContent: "space-between" }}>
+            <Text style={{ textAlign: 'center', color: 'white', fontSize: 14, bottom: 15 }}>Você tem uma conta?</Text>
+            <TouchableOpacity onPress={goLogin}>
+              <Text style={{
+                textAlign: 'center', color: 'white', fontSize: 14, bottom: 15, textDecorationLine: 'underline',
+                textShadowColor: 'rgba(255, 255, 255, 0.5)',
+                textShadowOffset: { width: 0.5, height: 1 },
+                textShadowRadius: 3, left: 5, fontWeight: 'bold'
+              }}>Faça Login.</Text>
+            </TouchableOpacity>
+          </View>
+        </ScrollView>
+      </KeyboardAvoidingView>
+    </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
-  gradientBackground:{
-    flex:1
+  gradientBackground: {
+    flex: 1,
+    backgroundColor: '#3386BC'
   },
   container: {
     flex: 1,
-    backgroundColor: 'transparent',
+    paddingTop: StatusBar.currentHeight || 0,
   },
-  scrollViewContent: {
-    flexGrow: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  imageContainer: {
+  header: {
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 20,
-    marginBottom: 20,
+    paddingTop: 20,
+    paddingBottom: 10,
   },
   imagem: {
-    width: 148,
-    height: 148,
+    width: '150%',
+    height: 100,
+    bottom: '35%'
   },
-  register: {
-    backgroundColor: '#ededed',
-    width: '100%',
-    alignItems: 'center',
-    borderRadius: 20,
-    padding: 20,
-    flex:1
-
-  },
-  textoI: {
-    alignSelf: 'flex-start',
-    paddingLeft:-0,
-    marginTop: 10,
-    marginBottom: 3,
-    color:'#000000',
-    fontWeight:'bold'
-  },
-  input: {
-    borderColor: '#000000',
-    borderBottomWidth: 1,
-    borderRadius: 10,
-    width: 400,
-    left:5,
-    paddingStart: 10,
-    height: 40,
-    marginBottom: 10,
-    fontSize:14
-  },
-  checkContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    alignSelf: 'flex-start',
-    marginBottom: 10,
-  },
-  check: {
-    alignSelf: 'flex-start',
-    marginLeft: 20,
+  imagemNome: {
+    width: '150%',
+    height: 100,
+    bottom: 40
   },
   title: {
-    marginLeft: 10,
+    color: '#F8F7FF',
+    fontSize: 28,
+    fontWeight: '600',
+    bottom: 60,
+    textShadowColor: 'rgba(255, 255, 255, 0.5)',
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 3,
+  },
+  subtitle: {
+    color: '#F8F7FF',
+    fontSize: 20,
+    fontWeight: '400',
+    marginBottom: -50,
+    bottom: 60,
+  },
+  rowContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '87%',
+    marginBottom: 0,
+  },
+  inputWrapper: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#FFF',
+    borderRadius: 20,
+    paddingLeft: 15,
+    borderWidth: 1,
+    borderColor: '#DDD',
+    height: 46,
+    marginBottom: 10
+  },
+  iconContainer: {
+    marginRight: 10,
+  },
+  input: {
+    flex: 1,
+    height: '100%',
     fontSize: 16,
-    color:'#000000',
-    fontWeight:'bold'
+    color: '#333',
+    paddingRight: 15,
   },
-  button:{
-    marginTop:25,
-    borderColor:'#000000',
-    borderWidth:1.5,
-    borderRadius:15,
-    width:250,
-    height:45,
-    textAlign:'center',
+  scrollContent: {
+    alignItems: 'center',
+    paddingBottom: 30,
   },
-  buttonText:{
-    textAlign:'center',
-    alignItems:'center',
-    justifyContent:'center',
-    paddingTop:10,
-    padding:5,
-    fontWeight:'bold',
-    color:'#000000'
-  }
+  textButtonContainer: {
+    width: '100%',
+    alignItems: 'center',
+    marginTop: 10,
+    top: 40
+  },
+  button: {
+    borderRadius: 20,
+    backgroundColor: '#3D9CDA',
+    height: 40,
+    width: 252,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginVertical: 10,
+    shadowColor: '#000000',
+    shadowRadius: 10,
+    shadowOpacity: 0.50,
+    shadowOffset: { width: 0, height: 2 },
+    elevation: 5,
+    bottom: 30
+  },
+  buttonText: {
+    color: 'white',
+    fontWeight: 'bold',
+    fontSize: 16,
+  },
 });

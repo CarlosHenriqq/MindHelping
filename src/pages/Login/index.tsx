@@ -1,131 +1,205 @@
-import { useFocusEffect, useNavigation } from '@react-navigation/native';
-import React from 'react';
-import { View, Text, StyleSheet, TextInput, KeyboardAvoidingView, TouchableOpacity, StatusBar } from 'react-native';
-import * as Animatable from 'react-native-animatable';
-import LinearGradient from 'react-native-linear-gradient';
+import React, { useState } from 'react';
+import { 
+    View, Text, StyleSheet, TextInput, KeyboardAvoidingView, 
+    TouchableOpacity, Image, ImageBackground, ScrollView, Dimensions, Platform 
+} from 'react-native';
+import { User, LockKeyhole } from 'lucide-react-native';
+import CheckBox from '@react-native-community/checkbox';
+import { useNavigation } from '@react-navigation/native';
+
+const { width, height } = Dimensions.get('window');
 
 const Login = () => {
     const navigation = useNavigation();
+    const [toggleCheck, setToggleCheck] = useState(false);
 
     const handleNavigateToHome = () => {
-        navigation.navigate('TabNavigation'); 
+        navigation.navigate('TabNavigation');
     };
 
     return (
-         <LinearGradient
-                colors={["#B8E4C9", "#A3D8F4"]}
-                start={{ x: 0, y: 0 }}
-                end={{ x: 1, y: 1 }}
-                style={styles.gradientBackground} >
-        <KeyboardAvoidingView style={styles.principal} behavior="padding">
-            <Animatable.Image
-                animation="zoomIn"
-                duration={400}
-                source={require('../../../assets/img/logo.png')}
-                style={styles.imagem}
-                resizeMode='contain'
-            />
-            <Animatable.View style={styles.inputContainer}>
-                <Text style={styles.texto}>Login:</Text>
-                <TextInput
-                    placeholder='Digite seu email'
-                    style={styles.input}
-                    placeholderTextColor="#6D6D6D"
-                />
-                <Text style={styles.texto}>Senha:</Text>
-                <TextInput 
-                    placeholder='Digite sua senha'
-                    style={styles.input}
-                    secureTextEntry={true} 
-                    placeholderTextColor='#6D6D6D'
-                />
-                <Animatable.View style={styles.textButtonContainer}>
+        <ImageBackground
+            source={require('../../../assets/img/gradiente.png')}
+            style={styles.gradientBackground}
+            blurRadius={20}
+        >
+            <KeyboardAvoidingView
+                style={{ flex: 1 }}
+                behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+            >
+                <ScrollView contentContainerStyle={styles.principal} keyboardShouldPersistTaps="handled">
+                    <Image
+                        source={require('../../../assets/img/nome_app.png')}
+                        style={styles.imagemNome}
+                        resizeMode='contain'
+                    />
+                    <Image
+                        source={require('../../../assets/img/logo.png')}
+                        style={styles.imagem}
+                        resizeMode='contain'
+                    />
+                    <Text style={styles.titulo}>FAÇA SEU LOGIN!</Text>
+
+                    <View style={styles.inputContainer}>
+                        <User color='#3386bC' size={24} style={styles.icon} />
+                        <TextInput
+                            placeholder='Usuário'
+                            style={styles.input}
+                            placeholderTextColor="#3386BC"
+                        />
+                    </View>
+
+                    <View style={styles.inputContainer}>
+                        <LockKeyhole color='#3386bC' size={24} style={styles.icon} />
+                        <TextInput
+                            placeholder='******'
+                            secureTextEntry
+                            style={styles.input}
+                            placeholderTextColor="#3386BC"
+                        />
+                    </View>
+
+                    <View style={styles.optionsContainer}>
+                        <View style={styles.checkboxContainer}>
+                            <CheckBox
+                                value={toggleCheck}
+                                onValueChange={(newValue) => setToggleCheck(newValue)}
+                                tintColors={{ true: '#ffffff', false: '#ffffff' }}
+                                style={styles.check}
+                            />
+                            <Text style={styles.checkboxText}>Lembrar</Text>
+                        </View>
+                        <TouchableOpacity>
+                            <Text style={styles.textSenha}>Esqueceu sua senha?</Text>
+                        </TouchableOpacity>
+                    </View>
+
                     <TouchableOpacity onPress={handleNavigateToHome} style={styles.button}>
-                        <Text style={styles.buttonText}>ACESSAR</Text> 
+                        <Text style={styles.buttonText}>Entrar</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.senha}>
-                        <Text style={styles.textSenha}>Esqueceu sua senha?</Text>
-                    </TouchableOpacity>
-                </Animatable.View>
-            </Animatable.View>
-        </KeyboardAvoidingView>
-        </LinearGradient>
+
+                    <View style={styles.signupContainer}>
+                        <Text style={styles.signupText}>Não tem uma conta? </Text>
+                        <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
+                            <Text style={styles.signupLink}>Inscreva-se</Text>
+                        </TouchableOpacity>
+                    </View>
+                </ScrollView>
+            </KeyboardAvoidingView>
+        </ImageBackground>
     );
 };
 
 const styles = StyleSheet.create({
-    gradientBackground:{
-        flex:1
-    },
-
-    principal: {
-        backgroundColor: "transparent",
+    gradientBackground: {
         flex: 1,
+        backgroundColor: '#3386BC',
+    },
+    principal: {
+        flexGrow: 1,
         alignItems: 'center',
         justifyContent: 'center',
+        paddingVertical: 30,
+    },
+    imagemNome: {
+        width: width * 0.6,
+        height: height * 0.1,
+        marginBottom: 10,
     },
     imagem: {
-        width: '70%',
-        maxHeight: '40%',
+        width: width * 0.6,
+        height: height * 0.2,
         marginBottom: 20,
     },
+    titulo: {
+        fontSize: 24,
+        color: 'white',
+        fontWeight: 'bold',
+        marginBottom: 20,
+        textShadowColor: 'rgba(255, 255, 255, 0.5)',
+        textShadowOffset: { width: 1, height: 1 },
+        textShadowRadius: 3,
+    },
     inputContainer: {
-        alignItems: 'center',
+        width: width * 0.85,
+        marginBottom: 15,
         justifyContent: 'center',
-        width: '100%',
-        padding: 20,
-        backgroundColor: '#ededed',
-        borderTopLeftRadius: 40,
-        borderTopRightRadius: 40,
-        flex: 2,
     },
     input: {
-        height: 45,
-        borderRadius: 8,
-        borderColor: '#000000',
-        width: '80%',
-        paddingHorizontal: 15,
-        borderWidth: 1,
         backgroundColor: '#FFF',
-        fontWeight: 'bold',
-        marginBottom: 15,
-    },
-    texto: {
+        borderRadius: 20,
+        height: 48,
         fontSize: 18,
-        color: '#333',
-        alignSelf: 'flex-start',
-        marginBottom: 8,
-        marginTop: 5,
-        paddingLeft: 45
+        paddingLeft: 45,
+        color: '#000',
+    },
+    icon: {
+        position: 'absolute',
+        left: 15,
+        top: 10,
+        zIndex: 1,
+    },
+    optionsContainer: {
+        width: width * 0.85,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginBottom: 20,
+    },
+    checkboxContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    check: {
+        width: 18,
+        height: 18,
+    },
+    checkboxText: {
+        color: 'white',
+        fontSize: 14,
+        marginLeft: 6,
     },
     textSenha: {
-        color: '#555',
-        fontStyle: 'italic',
+        color: 'white',
+        fontSize: 14,
+        textDecorationLine: 'underline',
     },
-    senha: {
+    button: {
+        backgroundColor: '#3D9CDA',
+        borderRadius: 20,
+        height: 44,
+        width: width * 0.5,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginBottom: 20,
+        shadowColor: '#000',
+        shadowRadius: 6,
+        shadowOpacity: 0.3,
+        shadowOffset: { width: 0, height: 2 },
+        elevation: 4,
+    },
+    buttonText: {
+        color: 'white',
+        fontSize: 16,
+        fontWeight: 'bold',
+    },
+    signupContainer: {
+        flexDirection: 'row',
         alignItems: 'center',
         marginTop: 10,
     },
-    textButtonContainer: {
-        width: '100%',
-        alignItems: 'center',
-        marginTop: 20,
+    signupText: {
+        color: 'white',
+        fontSize: 14,
     },
-    button: {
-        borderRadius: 8,
-        backgroundColor: '#ffffff',
-        height: 45,
-        width: '80%',
-        alignItems: 'center',
-        justifyContent: 'center',
-        marginVertical: 10,
-        borderColor: '#000000',
-        borderWidth: 1,
-    },
-    buttonText: {
-        color: '#333',
+    signupLink: {
+        color: 'white',
+        fontSize: 14,
         fontWeight: 'bold',
-        fontSize: 16,
+        textDecorationLine: 'underline',
+        textShadowColor: 'rgba(255, 255, 255, 0.5)',
+        textShadowOffset: { width: 1, height: 0.5 },
+        textShadowRadius: 2,
     },
 });
 

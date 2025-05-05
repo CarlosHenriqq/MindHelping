@@ -28,7 +28,7 @@ const Home = () => {
       const loadFeeling = async () => {
         const storedFeeling = await AsyncStorage.getItem('@selectedFeeling');
         setSelectedFeeling(storedFeeling || null);
-        StatusBar.setBackgroundColor('#B8E4C9');
+        
     
       };
        

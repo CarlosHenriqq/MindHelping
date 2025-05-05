@@ -35,8 +35,7 @@ const Call = () => {
 
   useFocusEffect(
     React.useCallback(() => {
-      StatusBar.setBackgroundColor('#00BBF4');
-      StatusBar.setBarStyle('light-content');
+      ;
       ImmersiveMode.setBarMode('Bottom');
       return () => ImmersiveMode.setBarMode('Normal');
       setLegenda(false)
