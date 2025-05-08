@@ -28,11 +28,7 @@ const Login = () => {
                 behavior={Platform.OS === 'ios' ? 'padding' : undefined}
             >
                 <ScrollView contentContainerStyle={styles.principal} keyboardShouldPersistTaps="handled">
-                    <Image
-                        source={require('../../../assets/img/nome_app.png')}
-                        style={styles.imagemNome}
-                        resizeMode='contain'
-                    />
+                    
                     <Image
                         source={require('../../../assets/img/logo.png')}
                         style={styles.imagem}
@@ -41,18 +37,18 @@ const Login = () => {
                     <Text style={styles.titulo}>FAÇA SEU LOGIN!</Text>
 
                     <View style={styles.inputContainer}>
-                        <User color='#3386bC' size={24} style={styles.icon} />
+                        <User color='#3386bC' size={20} style={styles.icon} />
                         <TextInput
-                            placeholder='Usuário'
+                            placeholder='E-mail'
                             style={styles.input}
                             placeholderTextColor="#3386BC"
                         />
                     </View>
 
                     <View style={styles.inputContainer}>
-                        <LockKeyhole color='#3386bC' size={24} style={styles.icon} />
+                        <LockKeyhole color='#3386bC' size={20} style={styles.icon} />
                         <TextInput
-                            placeholder='******'
+                            placeholder='Senha'
                             secureTextEntry
                             style={styles.input}
                             placeholderTextColor="#3386BC"
@@ -101,15 +97,10 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         paddingVertical: 30,
     },
-    imagemNome: {
-        width: width * 0.6,
-        height: height * 0.1,
-        marginBottom: 10,
-    },
     imagem: {
-        width: width * 0.6,
-        height: height * 0.2,
-        marginBottom: 20,
+        width: width * 1.0,
+        height: '40%',
+        marginBottom: 0,
     },
     titulo: {
         fontSize: 24,
@@ -129,14 +120,14 @@ const styles = StyleSheet.create({
         backgroundColor: '#FFF',
         borderRadius: 20,
         height: 48,
-        fontSize: 18,
+        fontSize: 16,
         paddingLeft: 45,
         color: '#000',
     },
     icon: {
         position: 'absolute',
         left: 15,
-        top: 10,
+        top: 13,
         zIndex: 1,
     },
     optionsContainer: {
@@ -157,7 +148,7 @@ const styles = StyleSheet.create({
     checkboxText: {
         color: 'white',
         fontSize: 14,
-        marginLeft: 6,
+        marginLeft: width*0.03,
     },
     textSenha: {
         color: 'white',
