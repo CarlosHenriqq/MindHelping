@@ -366,7 +366,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around', // Para espaçar os cards
   },
   card: {
-    backgroundColor: '#B8E4C9',
+    backgroundColor: '#3386bc',
     width: '45%', // Cada card vai ocupar 45% da largura
     padding: 15,
     borderRadius: 10,

@@ -39,11 +39,7 @@ const Inicial = () => {
           <Text style={styles.tituloNegrito}>BEM-VINDO(A)</Text>
         </Animatable.Text>
 
-        <Image
-          source={require('../../../assets/img/nome_app.png')}
-          style={styles.imagemNome}
-          resizeMode='contain'
-        />
+        
 
         <Image
           source={require('../../../assets/img/logo.png')}
@@ -106,15 +102,11 @@ const styles = StyleSheet.create({
     textShadowRadius: 10,
     textShadowOpacity: 0.25,
   },
-  imagemNome: {
-    width: width * 0.6,
-    maxHeight: height * 0.1,
-    marginBottom: 20,
-  },
+
   imagem: {
-    width: width * 0.6,
-    maxHeight: height * 0.2,
-    marginBottom: 40,
+    width: width * 1,
+    maxHeight: height * 0.4,
+    marginBottom: 20,
   },
   textButtonContainer: {
     width: '75%',

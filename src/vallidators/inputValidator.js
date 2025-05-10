@@ -26,4 +26,10 @@ export function isValidCPF(cpf) {
   export function isValidPhone(phone) {
     return phone.replace(/\D/g, '').length >= 10;
   }
+
+  export function isValidPassword(password) {
+  const regex = /^(?=.*[0-9])(?=.*[!@#$%^&*(),.?":{}|<>])[A-Za-z\d!@#$%^&*(),.?":{}|<>]{8,}$/;
+  return regex.test(password);
+}
+
   
