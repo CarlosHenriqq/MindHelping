@@ -69,9 +69,9 @@ Autenticação com JWT
 
 API RESTful
 
-Imagens do aplicativo:
+Algumas imagens do aplicativo:
 
-<img width="320" height="720" alt="Login (1)" src="https://github.com/user-attachments/assets/bcd21746-7eef-4c72-ab81-7d429e1a76db" />
+<img width="320" height="720" alt="Login" src="https://github.com/user-attachments/assets/bcd21746-7eef-4c72-ab81-7d429e1a76db" />
 
 <img width="320" height="720" alt="Analise" src="https://github.com/user-attachments/assets/caa521e9-28b1-4a3b-9ca6-51bce9cc4da5" />
 
