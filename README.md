@@ -1,79 +1,73 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+🧠 MindHelping
 
-# Getting Started
+O MindHelping é uma plataforma digital voltada para a saúde mental, composta por:
 
->**Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
+📱 Aplicativo mobile para usuários acompanharem suas emoções, registrarem sentimentos e acessarem apoio.
 
-## Step 1: Start the Metro Server
+💻 Portal web para profissionais, que permite gerenciar agenda, visualizar atendimentos e gerar relatórios.
 
-First, you will need to start **Metro**, the JavaScript _bundler_ that ships _with_ React Native.
+Nosso objetivo é aproximar usuários e profissionais de saúde mental, oferecendo uma ferramenta acessível, intuitiva e com impacto social.
 
-To start Metro, run the following command from the _root_ of your React Native project:
+✨ Funcionalidades principais
+👤 Para usuários (App Mobile – React Native)
 
-```bash
-# using npm
-npm start
+📅 Diário emocional: registro de sentimentos com horário.
 
-# OR using Yarn
-yarn start
-```
+📊 Visualização gráfica da variação emocional ao longo do tempo.
 
-## Step 2: Start your Application
+📞 Integração com CVV (188) para prevenção ao suicídio.
 
-Let Metro Bundler run in its _own_ terminal. Open a _new_ terminal from the _root_ of your React Native project. Run the following command to start your _Android_ or _iOS_ app:
+📂 Histórico de emoções por calendário.
 
-### For Android
+🎨 Modo acessível (cores adaptadas para daltônicos).
 
-```bash
-# using npm
-npm run android
+📱 Interface responsiva e intuitiva.
 
-# OR using Yarn
-yarn android
-```
+👨‍⚕️ Para profissionais (Web – React)
 
-### For iOS
+📋 Cadastro de agenda e disponibilidade.
 
-```bash
-# using npm
-npm run ios
+📅 Gerenciamento de agendamentos com pacientes.
 
-# OR using Yarn
-yarn ios
-```
+📈 Relatórios detalhados sobre atendimentos e evolução dos pacientes.
 
-If everything is set up _correctly_, you should see your new app running in your _Android Emulator_ or _iOS Simulator_ shortly provided you have set up your emulator/simulator correctly.
+🔒 Área restrita com autenticação segura.
 
-This is one way to run your app — you can also run it directly from within Android Studio and Xcode respectively.
+🛠️ Tecnologias utilizadas
+Mobile (Usuários)
 
-## Step 3: Modifying your App
+React Native
+ + Expo
 
-Now that you have successfully run the app, let's modify it.
+React Navigation
 
-1. Open `App.tsx` in your text editor of choice and edit some lines.
-2. For **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Developer Menu** (<kbd>Ctrl</kbd> + <kbd>M</kbd> (on Window and Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (on macOS)) to see your changes!
+SQLite
+ – armazenamento local
 
-   For **iOS**: Hit <kbd>Cmd ⌘</kbd> + <kbd>R</kbd> in your iOS Simulator to reload the app and see your changes!
+Axios
+ – integração com API
 
-## Congratulations! :tada:
+Lucide React Native
+ – ícones
 
-You've successfully run and modified your React Native App. :partying_face:
+Web (Profissionais)
 
-### Now what?
+React
 
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [Introduction to React Native](https://reactnative.dev/docs/getting-started).
+TailwindCSS
 
-# Troubleshooting
+Shadcn/ui
 
-If you can't get this to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
+Backend
 
-# Learn More
+Node.js
+ + Express
 
-To learn more about React Native, take a look at the following resources:
+PostgreSQL
 
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+Autenticação com JWT
+
+API RESTful
+
+Imagens do aplicativo:
+
