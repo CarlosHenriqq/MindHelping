@@ -71,8 +71,8 @@ API RESTful
 
 Imagens do aplicativo:
 
-<img width="320" height="320" alt="Login (1)" src="https://github.com/user-attachments/assets/bcd21746-7eef-4c72-ab81-7d429e1a76db" />
+<img width="320" height="520" alt="Login (1)" src="https://github.com/user-attachments/assets/bcd21746-7eef-4c72-ab81-7d429e1a76db" />
 
-<img width="320" height="320" alt="Analise" src="https://github.com/user-attachments/assets/caa521e9-28b1-4a3b-9ca6-51bce9cc4da5" />
+<img width="320" height="520" alt="Analise" src="https://github.com/user-attachments/assets/caa521e9-28b1-4a3b-9ca6-51bce9cc4da5" />
 
-<img width="320" height="320" alt="CVV" src="https://github.com/user-attachments/assets/1bbda3f5-bdf5-408c-9f6f-0ecc1a93e979" />
+<img width="320" height="520" alt="CVV" src="https://github.com/user-attachments/assets/1bbda3f5-bdf5-408c-9f6f-0ecc1a93e979" />
