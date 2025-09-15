@@ -71,7 +71,8 @@ API RESTful
 
 Imagens do aplicativo:
 
-![WhatsApp Image 2025-09-15 at 10 11 26](https://github.com/user-attachments/assets/c027d7aa-f762-4505-8d70-effb6d168ffd)
+<img width="739" height="1600" alt="Design sem nome (1)" src="https://github.com/user-attachments/assets/48e6bfdd-94c0-4374-a4a8-df56ae158cdf" />
 
-![WhatsApp Image 2025-09-15 at 10 11 27](https://github.com/user-attachments/assets/a2108e30-ccaf-48b7-885d-90675c6d21b1)
+
+<img width="739" height="1600" alt="Design sem nome" src="https://github.com/user-attachments/assets/598022aa-fceb-4f4e-96bb-845d04f489bb" />
 
