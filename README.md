@@ -71,3 +71,7 @@ API RESTful
 
 Imagens do aplicativo:
 
+![WhatsApp Image 2025-09-15 at 10 11 26](https://github.com/user-attachments/assets/c027d7aa-f762-4505-8d70-effb6d168ffd)
+
+![WhatsApp Image 2025-09-15 at 10 11 27](https://github.com/user-attachments/assets/a2108e30-ccaf-48b7-885d-90675c6d21b1)
+
